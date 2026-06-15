@@ -1,0 +1,3269 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고가혁 Staff AX 기본 교육</title>
+    <!-- Reset & Font CDN -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Custom properties for LG Electronics Brand Theme (Light Mode) */
+        :root {
+            --bg-base: #fcfbfe;
+            /* Very soft purplish-white base */
+            --bg-card: #ffffff;
+            --bg-card-hover: #ffffff;
+            --border-color: #eaddff;
+            --border-color-hover: #d0bcf5;
+
+            --primary: #ff1e38;
+            /* Vibrant Active Red from new attachment */
+            --primary-hover: #e00e26;
+            --primary-active: #c20016;
+            --primary-glow: rgba(255, 30, 56, 0.08);
+
+            --secondary: #4f5154;
+            /* Sleek Slate Gray */
+            --secondary-hover: #333537;
+
+            --text-main: #1e1e1f;
+            /* Dark Charcoal for readability */
+            --text-muted: #5e6266;
+            /* Medium Slate for descriptions */
+            --text-primary: #ff1e38;
+
+            --success: #2e7d32;
+            /* Success green */
+            --success-bg: #e8f5e9;
+
+            --danger: #d32f2f;
+            --danger-hover: #c62828;
+
+            --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius-lg: 16px;
+            --border-radius-md: 8px;
+            --border-radius-sm: 4px;
+        }
+
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        /* Light Background soft glow effects */
+        .bg-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.45;
+            z-index: -1;
+            pointer-events: none;
+            animation: rotateGlow 50s ease-in-out infinite alternate;
+        }
+
+        @keyframes rotateGlow {
+            0% {
+                transform: rotate(0deg) scale(1) translate(0px, 0px);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1) translate(25px, -15px);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1.02) translate(-15px, 25px);
+            }
+        }
+
+        .bg-glow-1 {
+            background: radial-gradient(ellipse at 25% 30%, rgba(147, 51, 234, 0.25) 0%, rgba(147, 51, 234, 0.08) 45%, rgba(255, 255, 255, 0) 70%);
+            top: -150px;
+            right: -100px;
+            width: 900px;
+            height: 900px;
+            transform-origin: 35% 65%;
+        }
+
+        .bg-glow-2 {
+            background: radial-gradient(ellipse at 75% 70%, rgba(168, 85, 247, 0.22) 0%, rgba(168, 85, 247, 0.08) 45%, rgba(255, 255, 255, 0) 70%);
+            bottom: -200px;
+            left: -200px;
+            width: 1000px;
+            height: 1000px;
+            transform-origin: 65% 35%;
+            animation-direction: alternate-reverse;
+            animation-duration: 60s;
+        }
+
+        /* Layout container - 전체 폭 1200px */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 24px;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: #000000;
+        }
+
+        /* Badge styling (LG Brand Style) */
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background-color: rgba(165, 0, 52, 0.06);
+            border: 1px solid rgba(165, 0, 52, 0.15);
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        /* Hero Section Layout & Surfing Elly Decoration */
+        .hero {
+            text-align: center;
+            padding: 40px 0 0 0;
+            position: relative;
+        }
+
+        .elly-surfing-img {
+            width: 55px;
+            height: auto;
+            vertical-align: middle;
+            mix-blend-mode: multiply;
+            display: inline-block;
+            margin-left: 12px;
+            margin-top: -12px;
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        @keyframes floatAnimation {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-4px) rotate(2deg);
+            }
+        }
+
+        .hero h1 {
+            font-size: 2.7rem;
+            line-height: 1.25;
+            margin-bottom: 20px;
+            color: #111111;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin: 0 auto 10px auto;
+            word-break: keep-all;
+        }
+
+        @media (min-width: 768px) {
+            .hero .subtitle {
+                white-space: nowrap;
+            }
+        }
+
+        /* Shared Section Title - 전체 비율 통일의 핵심 */
+        .section-title {
+            font-size: 1.5rem;
+            margin: 60px 0 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            gap: 10px;
+            border-bottom: 2px solid #222222;
+            padding-bottom: 12px;
+            width: 100%;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Hero Info Grid (Left: Overview, Right: Curriculum) */
+        .hero-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            width: 100%;
+            margin-top: 0;
+            text-align: left;
+        }
+
+        .overview-box,
+        .curriculum-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            transition: var(--transition-smooth);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .overview-box:hover,
+        .curriculum-box:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-color-hover);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .overview-header {
+            background-color: rgba(255, 30, 56, 0.03);
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .overview-body {
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .overview-item {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            background-color: rgba(0, 0, 0, 0.01);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .overview-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-glow);
+            color: var(--primary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .overview-icon-wrapper i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .overview-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .overview-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .overview-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Right: Curriculum Box */
+        .curr-header {
+            background-color: rgba(255, 30, 56, 0.03);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .curr-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111111;
+        }
+
+        .curr-badge {
+            background-color: var(--primary-glow);
+            color: var(--primary);
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .curr-body {
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+        }
+
+        .curr-list {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .curr-item {
+            display: flex;
+            flex: 1;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            background-color: rgba(0, 0, 0, 0.01);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .curr-num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-glow);
+            color: var(--primary);
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .curr-text {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+
+        .curr-item-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .curr-item-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Program Section & Cards */
+        .program-section {
+            margin: 40px 0 60px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(165, 0, 52, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 6px 18px rgba(165, 0, 52, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f8fafc;
+            border-color: #94a3b8;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #cbd5e1;
+            color: var(--text-muted);
+        }
+
+        .btn-outline:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            border-color: #94a3b8;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: var(--danger-hover);
+        }
+
+        /* Forms Section */
+        .registration-section {
+            margin: 0;
+            scroll-margin-top: 30px;
+        }
+
+        .form-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 32px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .form-label .required {
+            color: var(--danger);
+        }
+
+        .form-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Radio Tiles for Level choice */
+        .radio-tiles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .radio-tile-label {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .radio-tile-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-tile-content {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: var(--transition-smooth);
+        }
+
+        .radio-tile-label:hover .radio-tile-content {
+            background-color: #f8fafc;
+            border-color: var(--border-color-hover);
+        }
+
+        .radio-tile-input:checked+.radio-tile-content {
+            background-color: rgba(165, 0, 52, 0.03);
+            border: 2px solid var(--primary);
+        }
+
+        .tile-badge {
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .tile-badge.lv1 {
+            background-color: rgba(165, 0, 52, 0.06);
+            color: var(--primary);
+        }
+
+        .tile-badge.lv2 {
+            background-color: #f1f3f5;
+            color: var(--secondary);
+        }
+
+        .tile-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111111;
+            margin-bottom: 4px;
+        }
+
+        .tile-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Custom inputs and selects */
+        .input-icon-wrapper,
+        .select-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px 16px;
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: var(--border-radius-md);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        input[type="text"] {
+            padding-left: 44px;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 40px;
+            cursor: pointer;
+        }
+
+        select option {
+            background-color: #ffffff !important;
+            color: #222222 !important;
+            padding: 10px;
+        }
+
+        select:disabled {
+            background-color: #f1f5f9;
+            color: #94a3b8;
+            border-color: #e2e8f0;
+            cursor: not-allowed;
+        }
+
+        input[type="text"]::placeholder {
+            color: #94a3b8;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+            background-color: #ffffff;
+        }
+
+        .form-footer {
+            margin-top: 24px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .form-footer .btn {
+            width: auto;
+            min-width: 240px;
+        }
+
+        /* Status Section & Table */
+        .status-section {
+            margin: 0;
+        }
+
+        .status-info-bar {
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 14px 20px;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+        }
+
+        .status-info-bar span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .text-primary {
+            color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+            width: 100%;
+        }
+
+        .status-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .status-table th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .status-table td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
+            vertical-align: middle;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .status-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-table tbody tr {
+            transition: var(--transition-smooth);
+        }
+
+        .status-table tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .empty-row td {
+            text-align: center;
+            padding: 48px 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Badges for Level inside Table */
+        .table-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 4px;
+        }
+
+        .table-badge.lv1 {
+            background-color: rgba(255, 30, 56, 0.08);
+            color: var(--primary);
+            border: 1px solid rgba(255, 30, 56, 0.2);
+        }
+
+        .table-badge.lv2 {
+            background-color: rgba(79, 81, 84, 0.08);
+            color: var(--secondary);
+            border: 1px solid rgba(79, 81, 84, 0.2);
+        }
+
+        /* Status Badge */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 20px;
+            background-color: var(--success-bg);
+            color: var(--success);
+        }
+
+        .status-pill::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+
+        /* Cancel Button in Table */
+        .btn-table-cancel {
+            background: transparent;
+            border: 1px solid #fecaca;
+            color: var(--danger);
+            padding: 5px 12px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-table-cancel:hover {
+            background-color: #fee2e2;
+            border-color: #fca5a5;
+        }
+
+        /* Toast System */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #222222;
+            border-left: 4px solid var(--primary);
+            border-radius: var(--border-radius-sm);
+            padding: 16px 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .toast-icon {
+            color: #ffffff;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Modal Dialog */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 480px;
+            overflow: hidden;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.15);
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 1.15rem;
+            color: #000000;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #000000;
+        }
+
+        .modal-body {
+            padding: 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .modal-detail-box {
+            margin-top: 14px;
+            padding: 16px;
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            color: var(--text-main);
+        }
+
+        .modal-detail-box div {
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .modal-detail-box div:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-detail-box strong {
+            color: var(--text-muted);
+            font-weight: 600;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .modal-footer {
+            padding: 18px 24px;
+            background-color: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-footer .btn {
+            width: auto;
+            padding: 10px 20px;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-hint {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes blinkGlow {
+            0% {
+                opacity: 1;
+                text-shadow: 0 0 8px rgba(255, 30, 56, 0.4);
+            }
+
+            50% {
+                opacity: 0.5;
+                text-shadow: none;
+            }
+
+            100% {
+                opacity: 1;
+                text-shadow: 0 0 8px rgba(255, 30, 56, 0.4);
+            }
+        }
+
+        .blinking-text {
+            animation: blinkGlow 1.5s infinite ease-in-out;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .calendar-info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .calendar-container {
+                justify-content: center !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .elly-surfing-img {
+                width: 45px;
+                margin-left: 8px;
+                margin-top: -6px;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+                text-align: center;
+            }
+
+            .hero-info-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .search-box-flex {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .search-box-elly {
+                flex: 0 0 auto;
+            }
+
+            .search-elly-img {
+                width: 65px;
+            }
+
+            .radio-tiles {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .form-wrapper {
+                padding: 24px;
+            }
+
+            .form-footer .btn {
+                width: 100%;
+            }
+
+            .status-table th,
+            .status-table td {
+                padding: 12px;
+                font-size: 0.8rem;
+            }
+
+            .status-table th:nth-child(1),
+            .status-table td:nth-child(1),
+            .status-table th:nth-child(4),
+            .status-table td:nth-child(4),
+            .status-table th:nth-child(5),
+            .status-table td:nth-child(5) {
+                display: none;
+                /* Hide date, empID, dept on mobile for better fit */
+            }
+
+            .role-switcher-container {
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .my-reg-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .my-reg-actions {
+                width: 100%;
+            }
+
+            .my-reg-actions .btn {
+                width: 100%;
+            }
+        }
+
+        /* Role Switcher & Selector styling */
+        .role-switcher-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: -10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .role-selector {
+            display: inline-flex;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 4px;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .role-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .role-btn i {
+            width: 14px;
+            height: 14px;
+        }
+
+        .role-btn:hover {
+            color: var(--text-main);
+        }
+
+        .role-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(165, 0, 52, 0.15);
+        }
+
+        /* My Registration Cards styling */
+        .my-reg-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-left: 5px solid var(--primary);
+            transition: var(--transition-smooth);
+        }
+
+        .my-reg-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .my-reg-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .my-reg-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #111111;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .my-reg-details {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .my-reg-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .my-reg-detail-item i {
+            width: 15px;
+            height: 15px;
+            color: var(--primary);
+        }
+
+        .my-reg-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .my-reg-actions .btn {
+            width: auto;
+            padding: 10px 20px;
+            font-size: 0.85rem;
+        }
+
+        .my-reg-empty {
+            background: #ffffff;
+            border: 1px dashed var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 48px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .my-reg-empty i {
+            width: 44px;
+            height: 44px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+
+        /* Manual Search Box styling */
+        .my-search-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .search-box-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .search-box-inputs {
+            flex: 1;
+        }
+
+        .search-box-elly {
+            flex: 0 0 110px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-elly-img {
+            width: 75px;
+            height: auto;
+            mix-blend-mode: multiply;
+            animation: thinkingFloat 5s ease-in-out infinite;
+        }
+
+        @keyframes thinkingFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .my-search-box input[type="text"] {
+            background-color: #ffffff;
+        }
+
+        /* Closed and full options styles */
+        select option:disabled {
+            color: #94a3b8 !important;
+            background-color: #f1f5f9 !important;
+            font-style: italic;
+        }
+
+        /* Admin Tabs Styling */
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .admin-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .admin-tab-btn:hover {
+            color: var(--text-main);
+            background-color: #f1f5f9;
+        }
+
+        .admin-tab-btn.active {
+            color: var(--primary);
+            background-color: rgba(165, 0, 52, 0.05);
+        }
+
+        /* Target Add Box */
+        .target-add-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .target-add-box select {
+            background-color: #ffffff;
+        }
+
+        /* ── Field Validation Tooltip (말풍선 스타일) ── */
+        .field-tooltip {
+            position: absolute;
+            left: 0;
+            top: calc(100% + 10px);
+            background-color: #c62828;
+            color: #ffffff;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            white-space: nowrap;
+            z-index: 200;
+            pointer-events: none;
+            box-shadow: 0 4px 14px rgba(198, 40, 40, 0.35);
+            animation: tooltipIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* 말풍선 위쪽 삼각형 화살표 */
+        .field-tooltip::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 22px;
+            border-width: 0 7px 8px 7px;
+            border-style: solid;
+            border-color: transparent transparent #c62828 transparent;
+        }
+
+        /* shake 흔들림 애니메이션 (필드 강조용) */
+        .field-shake {
+            animation: fieldShake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        }
+
+        @keyframes tooltipIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fieldShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            15% {
+                transform: translateX(-6px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            65% {
+                transform: translateX(-4px);
+            }
+
+            85% {
+                transform: translateX(4px);
+            }
+        }
+
+        /* New Calendar Layout CSS - 가로 비율 최적화 (리스트 464px, 나머지 공간에 달력) */
+        .calendar-info-grid {
+            display: grid;
+            grid-template-columns: 464px 1fr;
+            gap: 24px;
+            width: 100%;
+            margin: 0 auto 0 auto;
+            text-align: left;
+        }
+
+        .session-list-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            max-height: 720px;
+            overflow-y: auto;
+            padding: 12px;
+        }
+
+        .session-list-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 12px;
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .session-list-item:hover {
+            background-color: #fff0f2;
+            border-color: #ffd1d9;
+        }
+
+        .session-list-item.selected {
+            background-color: #fff0f2;
+            border: 1px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(255, 30, 56, 0.1);
+        }
+
+        .session-list-item.selected .sl-title,
+        .session-list-item.selected .sl-desc {
+            color: #111;
+        }
+
+        .session-list-item.disabled {
+            background-color: #f8fafc;
+            color: #adb5bd;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .session-list-item.disabled .sl-title,
+        .session-list-item.disabled .sl-desc {
+            color: #adb5bd;
+        }
+
+        .sl-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sl-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #111;
+        }
+
+        .sl-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .sl-badge {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+            border: none;
+            background: transparent;
+            padding: 0;
+            text-align: right;
+        }
+
+        .session-list-item.selected .sl-badge {
+            color: var(--primary);
+        }
+
+        .session-list-box::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .session-list-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .session-list-box::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .session-list-box::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Calendar Section CSS */
+        .calendar-section {
+            padding: 0;
+        }
+
+        .calendar-container {
+            display: flex;
+            gap: 24px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .calendar-month {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            width: 320px;
+            max-width: 100%;
+        }
+
+        .calendar-title {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+        }
+
+        .cal-day-header {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            padding-bottom: 8px;
+        }
+
+        .cal-cell {
+            position: relative;
+            height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .cal-cell.empty {
+            background: transparent;
+            cursor: default;
+        }
+
+        .cal-cell.disabled {
+            background: #f8fafc;
+            color: #cbd5e1;
+            cursor: not-allowed;
+            font-weight: 500;
+        }
+
+        .cal-cell.pink-disabled {
+            background: #fff0f2;
+            color: #ffb1a8;
+            cursor: not-allowed;
+        }
+
+        .cal-cell.refresh-disabled {
+            background: #edf8f1;
+            color: #87d0a1;
+            cursor: not-allowed;
+        }
+
+        .cal-cell.selectable {
+            background: #fff0f2;
+            color: var(--primary);
+        }
+
+        .cal-cell.selectable:hover {
+            background: #ffe4e8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 30, 56, 0.1);
+        }
+
+        .cal-cell.selectable.selected {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 30, 56, 0.3);
+        }
+
+        .cal-date {
+            line-height: 1.1;
+        }
+
+        .cal-session {
+            font-size: 0.6rem;
+            margin-top: 0px;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+
+        .cal-cell.special-session {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .cal-cell.special-session:hover {
+            background: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(71, 85, 105, 0.2);
+        }
+
+        .cal-cell.special-session.selected {
+            background: #475569;
+            color: white;
+            box-shadow: 0 4px 12px rgba(71, 85, 105, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Gradients -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="container">
+        <!-- Role Switcher -->
+        <div class="role-switcher-container">
+            <div class="role-selector">
+                <button id="btnRoleUser" class="role-btn active" onclick="setRole('user')">
+                    <i data-lucide="user"></i> 신청자 모드
+                </button>
+                <button id="btnRoleAdmin" class="role-btn" onclick="requestAdminMode()">
+                    <i data-lucide="shield-alert"></i> 관리자 모드
+                </button>
+            </div>
+        </div>
+
+        <!-- Header / Hero Section -->
+        <header class="hero">
+            <div class="badge">LGE CVI Staff AX Capacity Building</div>
+            <h1>고가혁 Staff 구성원 <span>AX 기본 교육</span></h1>
+            <p class="subtitle">생성형 AI 실전 활용법부터 나만의 업무 에이전트 제작까지, 실무 내재화를 위한 교육 신청을 안내해 드립니다.</p>
+
+            <h2 class="section-title"><i data-lucide="book-open"></i> 교육 과정 안내</h2>
+
+            <div class="hero-info-grid">
+                <!-- Left Column: Education Overview -->
+                <div class="overview-box">
+                    <div class="overview-header">
+                        <i data-lucide="info" style="color: var(--primary);"></i> 교육 개요
+                    </div>
+                    <div class="overview-body">
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="book-open"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">교육 과정</span>
+                                <span class="overview-value">AX 실무 심화 교육 (1개 과정, 7시간)</span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="users"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">대상자</span>
+                                <span class="overview-value" style="line-height: 1.3;">고가혁 Staff 전 구성원 <span
+                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*기초
+                                        교육 이수자는 19~21차수 대상</span></span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="monitor"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">교육 방식</span>
+                                <span class="overview-value" style="line-height: 1.6;">오프라인(현장) 교육 <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">* 온라인 운영 없음</span></span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="calendar"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">교육 기간</span>
+                                <span class="overview-value">7/2(목) ~ 8/13(목) / 21개 차수 중 1개 선택</span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="map-pin"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">교육 장소</span>
+                                <span class="overview-value" style="line-height: 1.3;">사이언스파크 W6동 6층 수도권아카데미 4번 교육장
+                                    <span
+                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">* 대중 교통 이용</span></span>
+                            </div>
+                        </div>
+                        <div class="overview-item">
+                            <div class="overview-icon-wrapper">
+                                <i data-lucide="clock-4"></i>
+                            </div>
+                            <div class="overview-content">
+                                <span class="overview-label">신청 기간</span>
+                                <span class="overview-value" style="line-height: 1.3;">6/17(수) ~ 6/24(수) <span
+                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*신청
+                                        기간 이후 변경은 교육 담당자에게 별도 요청</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Curriculum -->
+                <div class="curriculum-box">
+                    <div class="curr-header">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <i data-lucide="list-checks" style="color: var(--primary);"></i>
+                            <span class="curr-title">교육 내용</span>
+                        </div>
+                    </div>
+                    <div class="curr-body">
+                        <div class="curr-list">
+                            <div class="curr-item">
+                                <div class="curr-num">01</div>
+                                <div class="curr-text">
+                                    <span class="curr-item-title">기본 실천 및 보안</span>
+                                    <span class="curr-item-desc">AX 기본 마인드셋 수립 및 프롬프트 엔지니어링 기초<br>안전한 AI 활용을 위한 사내 보안 원칙
+                                        및 할루시네이션 극복 방안</span>
+                                </div>
+                            </div>
+                            <div class="curr-item">
+                                <div class="curr-num">02</div>
+                                <div class="curr-text">
+                                    <span class="curr-item-title">MS Copilot 실전 실무</span>
+                                    <span class="curr-item-desc">아웃룩 이메일 자동 관리 및 팀즈 실시간 회의 요약/액션 플랜 도출<br>엑셀 데이터 분석 가이드
+                                        및 Loop 기반 디지털 공동 협업 환경 구축</span>
+                                </div>
+                            </div>
+                            <div class="curr-item">
+                                <div class="curr-num">03</div>
+                                <div class="curr-text">
+                                    <span class="curr-item-title">Copilot 심화 및 비주얼 협업</span>
+                                    <span class="curr-item-desc">Copilot Designer 활용 비주얼 에셋 생성 및 Co-work 연계 자동화<br>실무 적용
+                                        MVP 프로토타입 제작, Live 번역 및 LG 스타일 프롬프트 적용</span>
+                                </div>
+                            </div>
+                            <div class="curr-item">
+                                <div class="curr-num">04</div>
+                                <div class="curr-text">
+                                    <span class="curr-item-title">핵심 실습 및 토의 세션</span>
+                                    <span class="curr-item-desc">에이전트 & 홈페이지 만들기 강의 수강 및 부서별 조별 실습<br>도출 결과 기반 상호 발표 및
+                                        토의를 통한 현장 체득화 극대화</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Calendar Section -->
+        <section class="calendar-section" id="calendar-section">
+            <h2 class="section-title"><i data-lucide="calendar-days"></i> 교육 차수 안내</h2>
+            <p class="blinking-text" style="text-align: left; margin-bottom: 24px;">원하시는 차수를 선택하신 후, 하단에서 신청서를 작성해주세요.</p>
+
+            <div class="calendar-info-grid">
+                <!-- Left: Session List -->
+                <div class="left-column" style="position: relative;">
+                    <div class="session-list-box" id="session-list-container"
+                        style="position: absolute; top: 0; bottom: 0; left: 0; right: 0; max-height: none;">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Calendar -->
+                <div class="right-column"
+                    style="display: flex; flex-direction: column; gap: 24px; align-items: flex-end;">
+                    <div class="calendar-container" style="margin-bottom: 0;">
+                        <!-- 7월 캘린더 -->
+                        <div class="calendar-month">
+                            <h3 class="calendar-title">2026년 7월</h3>
+                            <div class="calendar-grid">
+                                <div class="cal-day-header">일</div>
+                                <div class="cal-day-header">월</div>
+                                <div class="cal-day-header">화</div>
+                                <div class="cal-day-header">수</div>
+                                <div class="cal-day-header">목</div>
+                                <div class="cal-day-header">금</div>
+                                <div class="cal-day-header">토</div>
+
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell disabled"><span class="cal-date">1</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_1', this)">
+                                    <span class="cal-date">2</span><span class="cal-session">1차수</span>
+                                </div>
+                                <div class="cal-cell disabled"><span class="cal-date">3</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">4</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">5</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">6</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_2', this)">
+                                    <span class="cal-date">7</span><span class="cal-session">2차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_3', this)">
+                                    <span class="cal-date">8</span><span class="cal-session">3차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_4', this)">
+                                    <span class="cal-date">9</span><span class="cal-session">4차수</span>
+                                </div>
+                                <div class="cal-cell disabled refresh-disabled"><span class="cal-date">10</span><span
+                                        class="cal-session"
+                                        style="font-size: 0.55rem; letter-spacing: -0.5px;">Refresh</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">11</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">12</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">13</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_5', this)">
+                                    <span class="cal-date">14</span><span class="cal-session">5차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_6', this)">
+                                    <span class="cal-date">15</span><span class="cal-session">6차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_7', this)">
+                                    <span class="cal-date">16</span><span class="cal-session">7차수</span>
+                                </div>
+                                <div class="cal-cell disabled pink-disabled"><span class="cal-date">17</span><span
+                                        class="cal-session">제헌절</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">18</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">19</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">20</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_8', this)">
+                                    <span class="cal-date">21</span><span class="cal-session">8차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_9', this)">
+                                    <span class="cal-date">22</span><span class="cal-session">9차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_10', this)">
+                                    <span class="cal-date">23</span><span class="cal-session">10차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_11', this)">
+                                    <span class="cal-date">24</span><span class="cal-session">11차수</span>
+                                </div>
+                                <div class="cal-cell disabled"><span class="cal-date">25</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">26</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">27</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_12', this)">
+                                    <span class="cal-date">28</span><span class="cal-session">12차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_13', this)">
+                                    <span class="cal-date">29</span><span class="cal-session">13차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_14', this)">
+                                    <span class="cal-date">30</span><span class="cal-session">14차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_15', this)">
+                                    <span class="cal-date">31</span><span class="cal-session">15차수</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8월 캘린더 -->
+                        <div class="calendar-month">
+                            <h3 class="calendar-title">2026년 8월</h3>
+                            <div class="calendar-grid">
+                                <div class="cal-day-header">일</div>
+                                <div class="cal-day-header">월</div>
+                                <div class="cal-day-header">화</div>
+                                <div class="cal-day-header">수</div>
+                                <div class="cal-day-header">목</div>
+                                <div class="cal-day-header">금</div>
+                                <div class="cal-day-header">토</div>
+
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell empty"></div>
+                                <div class="cal-cell disabled"><span class="cal-date">1</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">2</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">3</span></div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_16', this)">
+                                    <span class="cal-date">4</span><span class="cal-session">16차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_17', this)">
+                                    <span class="cal-date">5</span><span class="cal-session">17차수</span>
+                                </div>
+                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_18', this)">
+                                    <span class="cal-date">6</span><span class="cal-session">18차수</span>
+                                </div>
+                                <div class="cal-cell disabled"><span class="cal-date">7</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">8</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">9</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">10</span></div>
+                                <div class="cal-cell selectable special-session" title="대상자 전용"
+                                    onclick="selectSessionFromCalendar('lv2_19', this)"><span
+                                        class="cal-date">11</span><span class="cal-session">19차수</span></div>
+                                <div class="cal-cell selectable special-session" title="대상자 전용"
+                                    onclick="selectSessionFromCalendar('lv2_20', this)"><span
+                                        class="cal-date">12</span><span class="cal-session">20차수</span></div>
+                                <div class="cal-cell selectable special-session" title="대상자 전용"
+                                    onclick="selectSessionFromCalendar('lv2_21', this)"><span
+                                        class="cal-date">13</span><span class="cal-session">21차수</span></div>
+                                <div class="cal-cell disabled refresh-disabled"><span class="cal-date">14</span><span
+                                        class="cal-session"
+                                        style="font-size: 0.55rem; letter-spacing: -0.5px;">Refresh</span></div>
+                                <div class="cal-cell disabled pink-disabled"><span class="cal-date">15</span><span
+                                        class="cal-session">광복절</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">16</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">17</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">18</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">19</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">20</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">21</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">22</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">23</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">24</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">25</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">26</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">27</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">28</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">29</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">30</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">31</span></div>
+                            </div>
+                        </div>
+                    </div> <!-- End calendar-container -->
+
+                    <div id="selected-session-info"
+                        style="display: none; align-items: center; justify-content: space-between; padding: 14px 24px; background-color: #fff0f2; border: 2px solid var(--primary); border-radius: 8px; width: 100%; max-width: 664px;">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <p
+                                style="margin: 0; color: var(--primary); font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 8px;">
+                                <i data-lucide="check-circle-2"></i> 선택된 교육 : <span id="displaySelectedSession"></span>
+                            </p>
+                            <p id="offlineStatusHint"
+                                style="margin: 0 0 0 32px; font-size: 0.9rem; color: var(--text-main); font-weight: 500;">
+                                확인 버튼을 누른 후 신청서를 작성해 주세요
+                            </p>
+                        </div>
+                        <button type="button" class="btn"
+                            style="background-color: #ffffff; color: #111111; border: 2px solid #ffb1a8; border-radius: 8px; padding: 8px 28px; font-weight: 500; font-size: 0.95rem; width: auto; transition: all 0.2s;"
+                            onclick="confirmSessionSelection()" onmouseover="this.style.backgroundColor='#fff0f2'"
+                            onmouseout="this.style.backgroundColor='#ffffff'">확인</button>
+                    </div>
+                </div> <!-- End right-column -->
+            </div> <!-- End calendar-info-grid -->
+        </section>
+
+        <!-- Registration Form Section -->
+        <section class="registration-section" id="registration-form-section">
+            <h2 class="section-title"><i data-lucide="edit-3"></i> 교육 신청서 작성</h2>
+
+            <div class="form-wrapper">
+                <form id="regForm" onsubmit="handleFormSubmit(event)">
+                    <!-- Hidden field to default attendanceType to offline -->
+                    <input type="hidden" name="attendanceType" value="offline">
+
+                    <!-- Step 2: Select Session -->
+                    <div class="form-group" id="session-select-group" style="display: none; position: relative;">
+                        <label for="sessionSelect" class="form-label">희망 차수 선택 <span class="required">*</span></label>
+                        <div class="select-wrapper">
+                            <select id="sessionSelect" name="session" onchange="handleSessionChange(this.value)">
+                                <option value="" disabled selected>원하시는 차수를 선택하세요.</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="select-arrow"></i>
+                        </div>
+                        <p class="form-hint" id="sessionHint">각 차수별 선착순 마감되오니 일정을 확인하시어 빠른 신청 바랍니다.</p>
+                    </div>
+
+                    <!-- Step 3: Input Personnel Details -->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="userName" class="form-label">성명 <span class="required">*</span></label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="user" class="input-icon"></i>
+                                <input type="text" id="userName" name="userName" placeholder="홍길동" required
+                                    autocomplete="name">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="userEmpId" class="form-label">사번 <span class="required">*</span></label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="credit-card" class="input-icon"></i>
+                                <input type="text" id="userEmpId" name="userEmpId" placeholder="123456" required
+                                    pattern="[0-9A-Za-z]{4,10}" title="사번은 4자~10자 영문/숫자 조합입니다.">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="userDept" class="form-label">소속 부서 <span class="required">*</span></label>
+                            <div class="input-icon-wrapper">
+                                <i data-lucide="building-2" class="input-icon"></i>
+                                <input type="text" id="userDept" name="userDept" placeholder="인사운영팀" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-footer" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                        <div style="font-size: 0.95rem; color: var(--text-main); display: flex; align-items: center; gap: 8px; font-weight: 600;">
+                            <i data-lucide="laptop" style="color: var(--primary); width: 20px; height: 20px;"></i>
+                            실습을 위해 노트북을 지참하여 참석해 주세요.
+                        </div>
+                        <button type="submit" id="mainSubmitBtn" class="btn btn-primary btn-block" disabled>
+                            <i data-lucide="check-circle-2"></i> 데이터 연동 중...
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Registration Status Section -->
+        <section class="status-section">
+            <!-- User Mode View -->
+            <div id="userStatusContainer">
+                <h2 class="section-title"><i data-lucide="list-checks"></i> 나의 신청 현황</h2>
+
+                <!-- Search Form (Primary Entry Point) -->
+                <div class="my-search-box">
+                    <div class="search-box-flex">
+                        <div class="search-box-elly">
+                            <!-- Cute SVG Elly Character Image (Minimal file size) -->
+                            <img src="data:image/png;base64,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"
+                                alt="엘리 생각" class="search-elly-img">
+                        </div>
+                        <div class="search-box-inputs">
+                            <p
+                                style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                                <i data-lucide="search"
+                                    style="width: 16px; height: 16px; color: var(--primary); flex-shrink: 0;"></i>
+                                성명과 사번을 입력하면 신청한 교육을 확인하고 취소할 수 있습니다.
+                            </p>
+                            <div class="form-row" style="margin-bottom: 0;">
+                                <div class="form-group" style="margin-bottom: 0; min-width: 150px;">
+                                    <input type="text" id="searchName" placeholder="성명 입력"
+                                        style="padding-left: 16px; height: 46px;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0; min-width: 150px;">
+                                    <input type="text" id="searchEmpId" placeholder="사번 입력"
+                                        style="padding-left: 16px; height: 46px;">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0; flex: 0 0 auto; min-width: 120px;">
+                                    <button type="button" class="btn btn-secondary" onclick="performMySearch()"
+                                        style="height: 46px; padding: 0 24px; font-size: 0.9rem;">조회하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div id="myRegistrationList" style="margin-top: 20px;">
+                    <!-- Search results loaded here -->
+                </div>
+            </div>
+
+            <!-- Admin Mode View (hidden by default) -->
+            <div id="adminStatusContainer" style="display: none;">
+                <h2 class="section-title">
+                    <i data-lucide="list-checks"></i> 실시간 신청 현황 (전체)
+                    <span class="badge"
+                        style="margin-bottom: 0; margin-left: 10px; background-color: var(--primary); color: white; padding: 4px 10px; font-size: 0.75rem; border: none;">관리자
+                        모드</span>
+                </h2>
+
+                <!-- Admin Tab Content 1: Registrations List -->
+                <div id="adminTabContentRegs" class="admin-tab-content">
+                    <div class="status-info-bar"
+                        style="display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+                        <span><i data-lucide="info" class="text-primary"></i> <span id="adminListSourceText">본 정보는 브라우저
+                                로컬 저장소(localStorage)에 저장된 전체 신청 목록입니다.</span> (총 <strong id="adminTotalCount"
+                                style="color: var(--primary);">0</strong>건)</span>
+                        <div style="display: flex; gap: 8px; margin-left: auto;">
+                            <button type="button" class="btn btn-outline" onclick="refreshAdminData(this)"
+                                style="width: auto; height: 38px; padding: 0 16px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; border-color: #cbd5e1; color: #475569;">
+                                <i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> 동기화
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="downloadExcel()"
+                                style="width: auto; height: 38px; padding: 0 16px; font-size: 0.85rem; border-color: #107c41; color: #107c41; display: flex; align-items: center; gap: 6px;">
+                                <i data-lucide="download" style="width: 16px; height: 16px;"></i> 엑셀 다운로드
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="status-table" id="statusTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px; text-align: center;">No.</th>
+                                    <th>신청 시간</th>
+                                    <th>성명</th>
+                                    <th>사번</th>
+                                    <th>소속 부서</th>
+                                    <th>신청 교육 (차수)</th>
+                                    <th>상태</th>
+                                    <th>관리</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statusTableBody">
+                                <tr class="empty-row">
+                                    <td colspan="8">현재 신청된 내역이 없습니다. 위 신청서를 통해 첫 신청을 등록해 보세요!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <div class="toast-content">
+            <i data-lucide="check" class="toast-icon"></i>
+            <span id="toastMessage">신청이 완료되었습니다!</span>
+        </div>
+    </div>
+
+    <!-- Modal dialog for cancellation confirmation -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>신청 취소 확인</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>정말로 해당 교육 신청을 취소하시겠습니까?</p>
+                <div class="modal-detail-box" id="modalDetail">
+                    <!-- Detail filled by JS -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">이전으로</button>
+                <button class="btn btn-danger" id="btnConfirmDelete">신청 취소</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal dialog for Admin Password -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content" style="max-width: 380px;">
+            <div class="modal-header">
+                <h3>관리자 인증</h3>
+                <button class="close-btn" onclick="closePasswordModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 16px; font-size: 0.9rem;">관리자 비밀번호를 입력해주세요.</p>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <input type="password" id="adminPasswordInput" placeholder="비밀번호 입력"
+                        style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: var(--border-radius-md); font-size: 0.95rem; outline: none;">
+                    <p id="passwordError" class="form-hint"
+                        style="color: var(--danger); display: none; margin-top: 8px; font-weight: 600;">비밀번호가 올바르지 않습니다.
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closePasswordModal()">취소</button>
+                <button class="btn btn-primary" onclick="verifyAdminPassword()">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 고가혁 EXG Team. All Rights Reserved.</p>
+        <p class="footer-hint">교육 문의 : EXG팀 김성은 책임(sungeun0601.kim@lge.com), EXG팀 손수형 책임(soohyoung.son@lge.com)</p>
+    </footer>
+
+    <script>
+        // 1. Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBGjZQZqeJS1w8_uVoVTcmv7SQJl-KRgQmbbfymkWOBWDMS__eCGzXChKTfIxV-Ng/exec";
+
+        // Configuration for training sessions
+        const SESSIONS = {
+            level2: [
+                { id: "lv2_1", name: "1차수 | 7/2(목)", text: "1차수 - 7/2(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_2", name: "2차수 | 7/7(화)", text: "2차수 - 7/7(화) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_3", name: "3차수 | 7/8(수)", text: "3차수 - 7/8(수) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_4", name: "4차수 | 7/9(목)", text: "4차수 - 7/9(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_5", name: "5차수 | 7/14(화)", text: "5차수 - 7/14(화) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_6", name: "6차수 | 7/15(수)", text: "6차수 - 7/15(수) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_7", name: "7차수 | 7/16(목)", text: "7차수 - 7/16(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_8", name: "8차수 | 7/21(화)", text: "8차수 - 7/21(화) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_9", name: "9차수 | 7/22(수)", text: "9차수 - 7/22(수) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_10", name: "10차수 | 7/23(목)", text: "10차수 - 7/23(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_11", name: "11차수 | 7/24(금)", text: "11차수 - 7/24(금) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_12", name: "12차수 | 7/28(화)", text: "12차수 - 7/28(화) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_13", name: "13차수 | 7/29(수)", text: "13차수 - 7/29(수) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_14", name: "14차수 | 7/30(목)", text: "14차수 - 7/30(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_15", name: "15차수 | 7/31(금)", text: "15차수 - 7/31(금) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_16", name: "16차수 | 8/4(화)", text: "16차수 - 8/4(화) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_17", name: "17차수 | 8/5(수)", text: "17차수 - 8/5(수) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_18", name: "18차수 | 8/6(목)", text: "18차수 - 8/6(목) 09:00 ~ 17:00", capacity: 24 },
+                { id: "lv2_19", name: "19차수 | 8/11(화)", text: "19차수 - 8/11(화) 09:00 ~ 17:00", capacity: 24, restricted: true },
+                { id: "lv2_20", name: "20차수 | 8/12(수)", text: "20차수 - 8/12(수) 09:00 ~ 17:00", capacity: 24, restricted: true },
+                { id: "lv2_21", name: "21차수 | 8/13(목)", text: "21차수 - 8/13(목) 09:00 ~ 17:00", capacity: 24, restricted: true }
+            ]
+        };
+
+        const DATA_VERSION = "v8"; // Bump this when eligible users data structure changes
+
+        // Application state
+        // 19~21차수 지정 대상자 사번 목록 (서버에서 '대상자' 시트를 통해 동기화됨)
+        let RESTRICTED_SESSION_USERS = [];
+
+        let registrations = [];
+        let myRegisteredIds = [];
+        let currentRole = "user"; // "user" or "admin"
+        let deleteId = null;
+        let currentAdminPage = 1;
+        const ADMIN_ITEMS_PER_PAGE = 10;
+
+        // Initialize the page
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check data version and clear stale data if needed
+            const savedVersion = localStorage.getItem("ax_data_version");
+            if (savedVersion !== DATA_VERSION) {
+                localStorage.removeItem("ax_eligible_users");
+                localStorage.removeItem("ax_registrations");
+                localStorage.removeItem("ax_my_registered_ids");
+                localStorage.setItem("ax_data_version", DATA_VERSION);
+                console.log("Data version updated: registrations and eligible users reset.");
+            }
+
+            // Initial load of Lucide icons
+            lucide.createIcons();
+
+            // Load existing registrations from Google Sheets (or localStorage fallback)
+            loadRegistrations();
+
+            // Load user's own registered IDs on this device
+            loadMyRegisteredIds();
+
+            // Populate session dropdown options
+            populateSessions();
+
+            // Initialize active role (user/admin)
+            initRole();
+
+            // Bind Enter key in admin password modal
+            const pwdInput = document.getElementById("adminPasswordInput");
+            if (pwdInput) {
+                pwdInput.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") {
+                        verifyAdminPassword();
+                    }
+                });
+            }
+
+            const sessionGroup = document.getElementById('session-select-group');
+            if (sessionGroup) sessionGroup.style.display = 'none';
+
+
+        });
+
+        // Load registrations (Async load from Google Sheets)
+        async function loadRegistrations() {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
+                console.log("Google Script URL is not configured. Using localStorage fallback.");
+                const sourceTextEl = document.getElementById("adminListSourceText");
+                if (sourceTextEl) sourceTextEl.textContent = "본 정보는 테스트 환경(브라우저 로컬 저장소)의 신청 목록입니다.";
+                const saved = localStorage.getItem("ax_registrations");
+                registrations = saved ? JSON.parse(saved) : [];
+                populateSessions();
+                updateStatusView();
+                return;
+            }
+
+            try {
+                const t = new Date().getTime();
+                const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
+                if (response.ok) {
+                    const rawData = await response.json();
+                    registrations = rawData.map(r => ({
+                        ...r,
+                        userEmpId: String(r.userEmpId),
+                        userName: String(r.userName),
+                        userDept: String(r.userDept),
+                        timestamp: String(r.timestamp)
+                    }));
+                    localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+                    const sourceTextEl = document.getElementById("adminListSourceText");
+                    if (sourceTextEl) sourceTextEl.textContent = "본 정보는 실시간 서버(구글 스프레드시트)와 연동된 전체 신청 목록입니다.";
+                } else {
+                    throw new Error("HTTP Status " + response.status);
+                }
+
+                // 19~21차수 대상자 목록 동기화
+                try {
+                    const eligibleResponse = await fetch(GOOGLE_SCRIPT_URL + "?action=getEligibleUsers&t=" + t);
+                    if (eligibleResponse.ok) {
+                        const eligibleData = await eligibleResponse.json();
+                        if (Array.isArray(eligibleData)) {
+                            RESTRICTED_SESSION_USERS = eligibleData.map(u => String(u));
+                        }
+                    }
+                } catch (e) {
+                    console.error("Failed to load eligible users:", e);
+                }
+
+            } catch (e) {
+                console.error("Failed to load registrations from server, using localStorage cache:", e);
+                const saved = localStorage.getItem("ax_registrations");
+                registrations = saved ? JSON.parse(saved) : [];
+            } finally {
+                populateSessions();
+                updateStatusView();
+
+                // 데이터 로드 완료 후 버튼 활성화 (중복 방지)
+                const submitBtn = document.getElementById('mainSubmitBtn');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                    lucide.createIcons();
+                }
+            }
+        }
+
+        function saveRegistrations() {
+            localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+        }
+
+        function loadMyRegisteredIds() {
+            const saved = localStorage.getItem("ax_my_registered_ids");
+            if (saved) {
+                myRegisteredIds = JSON.parse(saved);
+            } else {
+                myRegisteredIds = [];
+                saveMyRegisteredIds();
+            }
+        }
+
+        function saveMyRegisteredIds() {
+            localStorage.setItem("ax_my_registered_ids", JSON.stringify(myRegisteredIds));
+        }
+
+        function initRole() {
+            currentRole = "user";
+            localStorage.setItem("ax_current_role", "user");
+
+            document.getElementById("btnRoleUser").classList.add("active");
+            document.getElementById("btnRoleAdmin").classList.remove("active");
+
+            updateStatusView();
+        }
+
+        function setRole(role) {
+            currentRole = role;
+            localStorage.setItem("ax_current_role", role);
+
+            const btnUser = document.getElementById("btnRoleUser");
+            const btnAdmin = document.getElementById("btnRoleAdmin");
+
+            if (role === "user") {
+                btnUser.classList.add("active");
+                btnAdmin.classList.remove("active");
+                showToast("신청자 모드로 전환되었습니다.", "info");
+            } else {
+                btnAdmin.classList.add("active");
+                btnUser.classList.remove("active");
+                showToast("관리자 모드로 전환되었습니다.");
+            }
+
+            updateStatusView();
+        }
+
+        function requestAdminMode() {
+            if (currentRole === "admin") return;
+
+            document.getElementById("adminPasswordInput").value = "";
+            document.getElementById("passwordError").style.display = "none";
+            document.getElementById("passwordModal").classList.add("show");
+
+            setTimeout(() => {
+                document.getElementById("adminPasswordInput").focus();
+            }, 150);
+        }
+
+        function closePasswordModal() {
+            document.getElementById("passwordModal").classList.remove("show");
+        }
+
+        function verifyAdminPassword() {
+            const passwordInput = document.getElementById("adminPasswordInput").value;
+            if (passwordInput === "a12345x") {
+                closePasswordModal();
+                setRole("admin");
+            } else {
+                document.getElementById("passwordError").style.display = "block";
+            }
+        }
+
+        function switchAdminTab(tab) {
+            activeAdminTab = tab;
+            const btnRegs = document.getElementById("tabBtnRegs");
+            const btnTargets = document.getElementById("tabBtnTargets");
+            const contentRegs = document.getElementById("adminTabContentRegs");
+            const contentTargets = document.getElementById("adminTabContentTargets");
+
+            if (tab === "regs") {
+                btnRegs.classList.add("active");
+                btnTargets.classList.remove("active");
+                contentRegs.style.display = "block";
+                contentTargets.style.display = "none";
+                renderAdminTable();
+            } else {
+                btnTargets.classList.add("active");
+                btnRegs.classList.remove("active");
+                contentTargets.style.display = "block";
+                contentRegs.style.display = "none";
+                renderTargetLists();
+            }
+        }
+
+        function updateStatusView() {
+            const userContainer = document.getElementById("userStatusContainer");
+            const adminContainer = document.getElementById("adminStatusContainer");
+
+            if (currentRole === "admin") {
+                userContainer.style.display = "none";
+                adminContainer.style.display = "block";
+                document.getElementById("adminTabContentRegs").style.display = "block";
+                renderAdminTable();
+            } else {
+                userContainer.style.display = "block";
+                adminContainer.style.display = "none";
+                renderUserView();
+            }
+        }
+
+        function handleSessionChange(sessionId) {
+            // Session Highlight 로직 필요시 추가
+        }
+
+        function showFieldTooltip(groupId, message) {
+            document.querySelectorAll('.field-tooltip').forEach(t => t.remove());
+            document.querySelectorAll('.field-shake').forEach(el => el.classList.remove('field-shake'));
+
+            const group = document.getElementById(groupId);
+            if (!group) return;
+
+            void group.offsetWidth;
+            group.classList.add('field-shake');
+            group.addEventListener('animationend', () => group.classList.remove('field-shake'), { once: true });
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'field-tooltip';
+            tooltip.textContent = message;
+            group.appendChild(tooltip);
+
+            group.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            setTimeout(() => tooltip.remove(), 3000);
+
+            group.addEventListener('click', () => tooltip.remove(), { once: true });
+            group.addEventListener('change', () => tooltip.remove(), { once: true });
+        }
+
+        // 통합된 handleFormSubmit 로직
+        let isSubmitting = false;
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const form = event.target;
+            const attendanceType = form.attendanceType.value;
+            const levelValue = "level2"; // Always level2 courses
+            const sessionId = form.session.value;
+            const userName = form.userName.value.trim();
+            const userEmpId = form.userEmpId.value.trim();
+            const userDept = form.userDept.value.trim();
+
+            if (!attendanceType) {
+                showFieldTooltip('level-select-group', '⚠️ 참가 방식을 선택해주세요.');
+                isSubmitting = false;
+                return;
+            }
+
+            if (!sessionId) {
+                showToast("교육 차수를 선택해 주세요.", "error");
+                isSubmitting = false;
+                return;
+            }
+
+            if (!userName || !userEmpId || !userDept) {
+                showToast("성명, 사번, 소속 부서를 모두 입력해주세요.", "error");
+                isSubmitting = false;
+                return;
+            }
+
+            // 2. Duplicate Check per Level
+            const hasDuplicate = registrations.some(
+                r => r.userName.toLowerCase() === userName.toLowerCase() &&
+                    r.userEmpId.toLowerCase() === userEmpId.toLowerCase() &&
+                    r.level === levelValue
+            );
+            if (hasDuplicate) {
+                showToast("중복 신청입니다. 이미 신청된 내역이 있습니다.", "error");
+                isSubmitting = false;
+                return;
+            }
+
+            // 3. Restricted Session Check (19~21차수 전용 대상자 대조)
+            const selectedSession = SESSIONS.level2.find(s => s.id === sessionId);
+            if (selectedSession) {
+                const isUserRestrictedTarget = RESTRICTED_SESSION_USERS.some(u => String(u) === String(userEmpId));
+                
+                if (selectedSession.restricted && !isUserRestrictedTarget) {
+                    showToast("대상자가 아닙니다. (선택하신 차수는 대상자 전용입니다)", "error");
+                    isSubmitting = false;
+                    return;
+                }
+                
+                if (!selectedSession.restricted && isUserRestrictedTarget) {
+                    showToast("기초 교육 이수자는 19~21차수만 신청 가능합니다.", "error");
+                    isSubmitting = false;
+                    return;
+                }
+            }
+
+            // 4. Verify session capacity (현장 참석만 24명 정원 제한 적용, 온라인은 제한 없음)
+            if (attendanceType === 'offline') {
+                const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
+                const offlineCount = registrations.filter(r => r.sessionId === sessionId && isOfflineReg(r)).length;
+                const capacityLimit = selectedSession ? (selectedSession.capacity || 24) : 24;
+
+                if (offlineCount >= capacityLimit) {
+                    showToast("선택하신 차수의 현장 참석 정원이 이미 마감되었습니다.", "error");
+                    isSubmitting = false;
+                    return;
+                }
+            }
+
+            let sessionName = selectedSession ? selectedSession.text : "";
+            if (attendanceType === 'online') {
+                sessionName = sessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+            }
+            const levelText = attendanceType === 'offline' ? '오프라인' : '온라인';
+
+            const now = new Date();
+            const pad = (n) => n < 10 ? '0' + n : n;
+            const timestamp = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+
+            const newId = "reg_" + Date.now();
+            const newReg = {
+                id: newId,
+                timestamp,
+                level: levelValue,
+                levelText,
+                userName,
+                userEmpId,
+                userDept,
+                sessionId,
+                sessionName
+            };
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "신청 처리 중...";
+            }
+
+            try {
+                // 즉시 로컬 데이터 갱신 (비동기 처리로 사용자 대기 시간 없앰)
+                registrations.unshift(newReg);
+                saveRegistrations();
+                myRegisteredIds.push(newId);
+                saveMyRegisteredIds();
+
+                const searchNameEl = document.getElementById("searchName");
+                const searchEmpIdEl = document.getElementById("searchEmpId");
+                if (searchNameEl) searchNameEl.value = userName;
+                if (searchEmpIdEl) searchEmpIdEl.value = userEmpId;
+
+                updateStatusView();
+                setTimeout(() => performMySearch(), 50);
+
+                setTimeout(() => {
+                    const resultEl = document.getElementById("myRegistrationList");
+                    if (resultEl) resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
+
+                form.reset();
+                populateSessions();
+
+                // 신청 완료 후 선택된 교육 UI 초기화
+                const sessionInfoEl = document.getElementById('selected-session-info');
+                if (sessionInfoEl) sessionInfoEl.style.display = 'none';
+                document.querySelectorAll('.cal-cell.selectable').forEach(el => el.classList.remove('selected'));
+                document.querySelectorAll('.session-list-item').forEach(el => el.classList.remove('selected'));
+
+                showToast("교육 신청이 정상적으로 완료되었습니다!");
+
+                // 백그라운드에서 구글 시트로 전송 (UI 멈춤 없음)
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
+                    const url = new URL(GOOGLE_SCRIPT_URL);
+                    url.searchParams.append('action', 'register');
+                    url.searchParams.append('attendanceType', attendanceType);
+                    url.searchParams.append('data', JSON.stringify(newReg));
+
+                    fetch(url.toString(), { method: 'GET' })
+                        .then(res => res.json())
+                        .then(resData => {
+                            if (!resData.success) {
+                                console.error("서버 처리 실패:", resData.error);
+                                // 서버 실패 시 롤백 (안전 장치)
+                                registrations = registrations.filter(r => r.id !== newId);
+                                myRegisteredIds = myRegisteredIds.filter(id => id !== newId);
+                                saveRegistrations();
+                                saveMyRegisteredIds();
+                                updateStatusView();
+                                showToast("신청 실패: " + (resData.error || "일시적인 오류"), "error");
+                            }
+                        })
+                        .catch(e => {
+                            console.error("서버 백그라운드 전송 에러:", e);
+                            registrations = registrations.filter(r => r.id !== newId);
+                            myRegisteredIds = myRegisteredIds.filter(id => id !== newId);
+                            saveRegistrations();
+                            saveMyRegisteredIds();
+                            updateStatusView();
+                            showToast("네트워크 오류로 신청되지 않았습니다.", "error");
+                        });
+                }
+            } catch (e) {
+                console.error("Local registration failed:", e);
+                showToast("신청 처리 중 오류가 발생했습니다.", "error");
+            } finally {
+                isSubmitting = false;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                    lucide.createIcons();
+                }
+            }
+        }
+
+        // Populate Sessions Dropdown and List
+        function populateSessions() {
+            const select = document.getElementById('sessionSelect');
+            if (!select) return;
+
+            const prevValue = select.value;
+
+            select.innerHTML = '<option value="" disabled selected>캘린더 또는 좌측 목록에서 차수를 선택해주세요.</option>';
+            select.disabled = false;
+
+            const listContainer = document.getElementById("session-list-container");
+            if (listContainer) listContainer.innerHTML = "";
+
+            const attendanceType = 'offline';
+
+            SESSIONS.level2.forEach(s => {
+                const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
+                const offlineCount = (registrations || []).filter(r => r.sessionId === s.id && isOfflineReg(r)).length;
+                const limit = s.capacity || 24;
+                const remaining = limit - offlineCount;
+
+                // Populate Hidden Select
+                const opt = document.createElement('option');
+                opt.value = s.id;
+
+                let badgeText = '';
+                if (s.inactive) {
+                    opt.textContent = `${s.name.split(' | ')[0]} (예비 차수)`;
+                    opt.disabled = true;
+                    badgeText = '<span class="sl-badge" style="color:#adb5bd;">예비 차수</span>';
+                } else if (s.restricted) {
+                    if (remaining <= 0) {
+                        opt.textContent = `${s.name.split(' | ')[0]} (대상자 전용 / 마감)`;
+                        opt.disabled = true;
+                        badgeText = `<span class="sl-badge" style="color:#64748b;">대상자 전용 <span style="font-weight:400;">(마감)</span></span>`;
+                    } else {
+                        opt.textContent = `${s.name.split(' | ')[0]} (대상자 전용 / 잔여석: ${remaining}/${limit})`;
+                        badgeText = `<span class="sl-badge" style="color:#64748b;">대상자 전용 <span style="font-weight:400; opacity:0.8;">(잔여석: ${remaining}/${limit})</span></span>`;
+                    }
+                } else {
+                    const colorStyle = remaining < 5 ? "color: var(--primary);" : "color: #28a745;";
+
+                    if (remaining <= 0) {
+                        opt.textContent = `${s.name.split(' | ')[0]} (마감)`;
+                        opt.disabled = true;
+                        badgeText = `<span class="sl-badge" style="color:#adb5bd;">마감</span>`;
+                    } else {
+                        opt.textContent = `${s.name.split(' | ')[0]} (잔여석: ${remaining}/${limit})`;
+                        badgeText = `<span class="sl-badge" style="${colorStyle}">잔여석: ${remaining}/${limit}</span>`;
+                    }
+                }
+
+                if (s.id === prevValue && !opt.disabled) {
+                    opt.selected = true;
+                }
+
+                select.appendChild(opt);
+
+                // Render List Item
+                if (listContainer) {
+                    const item = document.createElement("div");
+                    item.className = "session-list-item";
+                    item.id = "list-item-" + s.id;
+
+                    const textParts = s.text.split(" - ");
+                    const sessionName = textParts[0];
+                    const sessionTime = textParts.length > 1 ? " - " + textParts[1] : "";
+                    const formattedText = `${sessionName} <span style="font-size: 0.85rem; font-weight: 400; color: #64748b;">${sessionTime}</span>`;
+
+                    if (s.inactive) {
+                        item.classList.add("disabled");
+                        item.innerHTML = `<div class="sl-info"><span class="sl-title" style="font-size: 0.95rem;">${formattedText}</span></div>${badgeText}`;
+                    } else {
+                        if (s.restricted) {
+                            item.style.backgroundColor = '#f8fafc';
+                        }
+                        item.innerHTML = `<div class="sl-info"><span class="sl-title" style="font-size: 0.95rem;">${formattedText}</span></div>${badgeText}`;
+                        item.onclick = () => { selectSessionFromCalendar(s.id, document.querySelector(`.cal-cell.selectable[onclick*="'${s.id}'"]`) || item); };
+                    }
+                    listContainer.appendChild(item);
+                }
+            });
+
+            if (select.value === "" && prevValue) {
+                document.getElementById('selected-session-info').style.display = 'none';
+            }
+        }
+
+        function selectSessionFromCalendar(sessionId, cellElement) {
+            const session = SESSIONS.level2.find(s => s.id === sessionId);
+
+            if (session) {
+                const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
+                const offlineCount = (registrations || []).filter(r => r.sessionId === session.id && isOfflineReg(r)).length;
+                const limit = session.capacity || 24;
+                const remaining = limit - offlineCount;
+
+                if (remaining <= 0) {
+                    showToast("선택하신 차수는 마감되었습니다.", "error");
+                    return;
+                }
+            }
+
+            if (document.getElementById('sessionSelect').options.length <= 1) {
+                document.getElementById('sessionSelect').value = sessionId;
+                populateSessions();
+            }
+
+            document.querySelectorAll('.cal-cell.selectable').forEach(el => el.classList.remove('selected'));
+            document.querySelectorAll('.session-list-item').forEach(el => el.classList.remove('selected'));
+
+            if (cellElement && !cellElement.classList.contains('selected')) {
+                cellElement.classList.add('selected');
+            }
+            const calCell = document.querySelector(`.cal-cell.selectable[onclick*="'${sessionId}'"]`);
+            if (calCell && !calCell.classList.contains('selected')) calCell.classList.add('selected');
+
+            const listItem = document.getElementById("list-item-" + sessionId);
+            if (listItem && !listItem.classList.contains('disabled')) {
+                listItem.classList.add('selected');
+                // Scroll the list if it's not fully visible
+                listItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            const select = document.getElementById('sessionSelect');
+            let optionFound = false;
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value === sessionId && !select.options[i].disabled) {
+                    select.selectedIndex = i;
+                    optionFound = true;
+                    break;
+                }
+            }
+
+            if (optionFound) {
+                document.getElementById('selected-session-info').style.display = 'flex';
+                const session = SESSIONS.level2.find(s => s.id === sessionId);
+                if (session) {
+                    const textParts = session.text.split(" - ");
+                    const sessionName = textParts[0];
+                    const sessionTime = textParts.length > 1 ? " - " + textParts[1] : "";
+                    document.getElementById('displaySelectedSession').innerHTML = `<span style="color: #111111;">${sessionName} <span style="font-weight: 500;">${sessionTime}</span></span>`;
+                }
+            } else {
+                showToast("선택하신 차수는 현장 참석이 마감되었거나 선택할 수 없습니다.", "error");
+                document.getElementById('selected-session-info').style.display = 'none';
+
+                // 선택 해제 UI 처리
+                if (cellElement) cellElement.classList.remove('selected');
+                if (calCell) calCell.classList.remove('selected');
+                if (listItem) listItem.classList.remove('selected');
+            }
+        }
+
+        function confirmSessionSelection() {
+            document.getElementById("registration-form-section").scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function formatTimestamp(ts) {
+            if (!ts) return '';
+            const d = new Date(ts);
+            if (isNaN(d.getTime())) return ts;
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            const hh = String(d.getHours()).padStart(2, '0');
+            const min = String(d.getMinutes()).padStart(2, '0');
+            return `${yyyy}.${mm}.${dd} ${hh}:${min}`;
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById("statusTableBody");
+            const adminCountSpan = document.getElementById("adminTotalCount");
+
+            tbody.innerHTML = "";
+            adminCountSpan.textContent = registrations.length;
+
+            if (registrations.length === 0) {
+                tbody.innerHTML = `
+            <tr class="empty-row">
+                <td colspan="8">현재 신청된 내역이 없습니다. 위 신청서를 통해 첫 신청을 등록해 보세요!</td>
+            </tr>
+        `;
+                if (typeof renderPagination === "function") renderPagination(0);
+                return;
+            }
+
+            const totalPages = Math.ceil(registrations.length / ADMIN_ITEMS_PER_PAGE);
+            if (currentAdminPage > totalPages) currentAdminPage = totalPages;
+            if (currentAdminPage < 1) currentAdminPage = 1;
+
+            const startIndex = (currentAdminPage - 1) * ADMIN_ITEMS_PER_PAGE;
+            const endIndex = Math.min(startIndex + ADMIN_ITEMS_PER_PAGE, registrations.length);
+            const pageItems = registrations.slice(startIndex, endIndex);
+
+            pageItems.forEach((reg, i) => {
+                const index = startIndex + i;
+                const tr = document.createElement("tr");
+                const levelBadgeClass = reg.level === "level1" ? "lv1" : "lv2";
+
+                const rawText = reg.levelText || "";
+                const parenMatch = rawText.match(/\(([^)]+)\)/);
+                const displayLevelText = parenMatch ? parenMatch[1] : rawText;
+
+                let displaySessionName = reg.sessionName;
+                if (displayLevelText === '온라인' || displayLevelText.includes('온라인')) {
+                    displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+                }
+
+                const formattedTime = formatTimestamp(reg.timestamp);
+                const rowNum = index + 1;
+
+                tr.innerHTML = `
+            <td style="text-align: center; color: var(--text-muted); font-weight: 500;">${rowNum}</td>
+            <td>${formattedTime}</td>
+            <td style="font-weight: 600;">${escapeHtml(String(reg.userName))}</td>
+            <td>${escapeHtml(String(reg.userEmpId))}</td>
+            <td>${escapeHtml(String(reg.userDept))}</td>
+            <td>${escapeHtml(displaySessionName.includes(" - ") ? displaySessionName.split(" - ")[0] : displaySessionName.includes(":") ? displaySessionName.split(":")[0] : displaySessionName)}</td>
+            <td><span class="status-pill">신청완료</span></td>
+            <td>
+                <button class="btn-table-cancel" onclick="openCancelModal('${reg.id}')">취소</button>
+            </td>
+        `;
+                tbody.appendChild(tr);
+            });
+
+            renderPagination(totalPages);
+        }
+
+        function renderPagination(totalPages) {
+            let paginationContainer = document.getElementById("adminPagination");
+            if (!paginationContainer) {
+                paginationContainer = document.createElement("div");
+                paginationContainer.id = "adminPagination";
+                paginationContainer.style.display = "flex";
+                paginationContainer.style.justifyContent = "center";
+                paginationContainer.style.gap = "4px";
+                paginationContainer.style.marginTop = "16px";
+                document.getElementById("statusTable").parentNode.appendChild(paginationContainer);
+            }
+            
+            paginationContainer.innerHTML = "";
+            
+            if (totalPages <= 1) return;
+
+            const baseStyle = "padding: 2px 8px; font-size: 0.8rem; min-width: 28px; height: 28px; display: inline-flex; justify-content: center; align-items: center; border-radius: 4px;";
+
+            const prevBtn = document.createElement("button");
+            prevBtn.className = "btn btn-outline";
+            prevBtn.style.cssText = baseStyle;
+            prevBtn.innerHTML = "&lt;";
+            prevBtn.disabled = currentAdminPage === 1;
+            prevBtn.onclick = () => {
+                if (currentAdminPage > 1) {
+                    currentAdminPage--;
+                    renderAdminTable();
+                }
+            };
+            paginationContainer.appendChild(prevBtn);
+
+            let startPage = Math.max(1, currentAdminPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+
+            for (let p = startPage; p <= endPage; p++) {
+                const btn = document.createElement("button");
+                btn.className = p === currentAdminPage ? "btn btn-primary" : "btn btn-outline";
+                btn.style.cssText = baseStyle;
+                btn.textContent = p;
+                btn.onclick = () => {
+                    currentAdminPage = p;
+                    renderAdminTable();
+                };
+                paginationContainer.appendChild(btn);
+            }
+
+            const nextBtn = document.createElement("button");
+            nextBtn.className = "btn btn-outline";
+            nextBtn.style.cssText = baseStyle;
+            nextBtn.innerHTML = "&gt;";
+            nextBtn.disabled = currentAdminPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentAdminPage < totalPages) {
+                    currentAdminPage++;
+                    renderAdminTable();
+                }
+            };
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        function renderUserView() {
+            const listContainer = document.getElementById("myRegistrationList");
+            if (listContainer) {
+                listContainer.innerHTML = "";
+            }
+        }
+
+        async function performMySearch() {
+            const nameInput = document.getElementById("searchName").value.trim();
+            const empIdInput = document.getElementById("searchEmpId").value.trim();
+
+            if (!nameInput || !empIdInput) {
+                showToast("성명과 사번을 모두 입력해주세요.", "error");
+                return;
+            }
+
+            // 조회 시 서버에서 최신 상태를 강제로 불러오기 (엑셀 삭제 실시간 반영)
+            const btn = document.querySelector('.my-reg-search button');
+            const originalText = btn ? btn.innerHTML : '';
+            if (btn) btn.innerHTML = '<i class="lucide-loader"></i> 동기화 중...';
+            await loadRegistrations();
+            if (btn) btn.innerHTML = originalText;
+
+            const matches = registrations.filter(
+                r => r.userName.toLowerCase() === nameInput.toLowerCase() &&
+                    r.userEmpId.toLowerCase() === empIdInput.toLowerCase()
+            );
+
+            const listContainer = document.getElementById("myRegistrationList");
+            listContainer.innerHTML = "";
+
+            if (matches.length === 0) {
+                listContainer.innerHTML = `
+            <div class="my-reg-empty">
+                <i data-lucide="help-circle"></i>
+                <p style="font-weight: 700; font-size: 1.05rem; color: var(--text-main); margin-bottom: 6px;">신청된 교육 내역이 없습니다.</p>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">
+                    입력하신 성명과 사번으로 등록된 교육 신청 내역을 찾을 수 없습니다.
+                </p>
+            </div>
+        `;
+                lucide.createIcons();
+                return;
+            }
+
+            let html = `<p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;"><strong style="color: var(--primary);">${escapeHtml(nameInput)}</strong>님의 신청 내역 ${matches.length}건이 조회되었습니다.</p>`;
+            matches.forEach(reg => {
+                let displaySessionName = reg.sessionName;
+                if (reg.levelText === '온라인' || reg.levelText.includes('온라인')) {
+                    displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+                }
+
+                const formattedTime = formatTimestamp(reg.timestamp);
+
+                html += `
+            <div class="my-reg-card">
+                <div class="my-reg-info">
+                    <div class="my-reg-title">
+                        <span style="font-weight: 700; color: #111111;">${escapeHtml(reg.userName)}님의 신청 내역</span>
+                        <span class="status-pill" style="margin-left: 8px;">신청완료</span>
+                    </div>
+                    <div class="my-reg-details">
+                        <div class="my-reg-detail-item">
+                            <i data-lucide="calendar"></i>
+                            <span><strong>신청 차수:</strong> ${escapeHtml(displaySessionName)}</span>
+                        </div>
+                        <div class="my-reg-detail-item">
+                            <i data-lucide="credit-card"></i>
+                            <span><strong>사번:</strong> ${escapeHtml(reg.userEmpId)}</span>
+                        </div>
+                        <div class="my-reg-detail-item">
+                            <i data-lucide="building-2"></i>
+                            <span><strong>소속 부서:</strong> ${escapeHtml(reg.userDept)}</span>
+                        </div>
+                        <div class="my-reg-detail-item">
+                            <i data-lucide="clock"></i>
+                            <span><strong>신청 시간:</strong> ${formattedTime}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-reg-actions">
+                    <button class="btn btn-outline" style="border-color: #fca5a5; color: var(--danger);" onclick="openCancelModal('${reg.id}')">
+                        <i data-lucide="x-circle" style="vertical-align: middle; margin-right: 4px; width: 16px; height: 16px;"></i> 신청 취소
+                    </button>
+                </div>
+            </div>
+        `;
+            });
+
+            listContainer.innerHTML = html;
+            lucide.createIcons();
+        }
+
+        async function refreshAdminData(btnElement) {
+            if (btnElement) {
+                const icon = btnElement.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('lucide-refresh-cw');
+                    icon.classList.add('lucide-loader');
+                }
+                btnElement.disabled = true;
+                btnElement.innerHTML = '<i class="lucide-loader"></i> 동기화 중...';
+            }
+            
+            await loadRegistrations();
+            
+            if (btnElement) {
+                btnElement.disabled = false;
+                btnElement.innerHTML = '<i data-lucide="refresh-cw" style="width: 16px; height: 16px;"></i> 동기화';
+                lucide.createIcons();
+            }
+            showToast("실시간 데이터가 최신으로 동기화되었습니다.", "info");
+        }
+
+        function downloadExcel() {
+            if (registrations.length === 0) {
+                showToast("다운로드할 신청 내역이 없습니다.", "error");
+                return;
+            }
+
+            const headers = ["신청 시간", "성명", "사번", "소속 부서", "신청 교육 (차수)", "상태"];
+
+            const rows = registrations.map(r => [
+                formatTimestamp(r.timestamp),
+                r.userName || "",
+                r.userEmpId || "",
+                r.userDept || "",
+                r.sessionName || "",
+                "신청완료"
+            ]);
+
+            const escapeCsvValue = (val) => {
+                const str = String(val).replace(/"/g, '""');
+                return `"${str}"`;
+            };
+
+            const csvContent = [
+                headers.map(escapeCsvValue).join(","),
+                ...rows.map(row => row.map(escapeCsvValue).join(","))
+            ].join("\n");
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const dateStr = `${year}${month}${day}`;
+            const filename = `AX_교육_신청현황_${dateStr}.csv`;
+
+            const csvWithBOM = "\uFEFF" + csvContent;
+            const dataUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvWithBOM);
+
+            const link = document.createElement("a");
+            link.setAttribute("href", dataUri);
+            link.setAttribute("download", filename);
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast("신청 현황이 엑셀(CSV) 파일로 다운로드되었습니다.", "success");
+        }
+
+        function openCancelModal(id) {
+            deleteId = id;
+            const reg = registrations.find(r => r.id === id);
+            if (!reg) return;
+
+            let displaySessionName = reg.sessionName;
+            if (reg.levelText === '온라인' || reg.levelText.includes('온라인')) {
+                displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+            }
+
+            const detailBox = document.getElementById("modalDetail");
+            detailBox.innerHTML = `
+        <div><strong>교육 구분</strong> ${reg.levelText}</div>
+        <div><strong>신청 차수</strong> ${escapeHtml(displaySessionName)}</div>
+        <div><strong>신청자</strong> ${escapeHtml(reg.userName)} (${escapeHtml(reg.userEmpId)})</div>
+        <div><strong>소속 부서</strong> ${escapeHtml(reg.userDept)}</div>
+    `;
+
+            const modal = document.getElementById("confirmModal");
+            modal.classList.add("show");
+
+            document.getElementById("btnConfirmDelete").onclick = () => {
+                confirmCancel();
+            };
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("confirmModal");
+            modal.classList.remove("show");
+            deleteId = null;
+        }
+
+        async function confirmCancel() {
+            if (!deleteId) return;
+
+            // 취소 버튼 비활성화 및 처리 중 표시 (필요 시 모달 내 버튼 제어)
+            const confirmBtn = document.getElementById("btnConfirmDelete");
+            const originalText = confirmBtn ? confirmBtn.textContent : "신청 취소";
+            if (confirmBtn) {
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = "처리 중...";
+            }
+
+            try {
+                // 먼저 서버로 삭제 요청 전송 (await 사용)
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
+                    const url = new URL(GOOGLE_SCRIPT_URL);
+                    url.searchParams.append('action', 'cancel');
+                    url.searchParams.append('id', deleteId);
+                    url.searchParams.append('t', Date.now()); // 캐시 방지
+
+                    const response = await fetch(url.toString(), { method: 'GET', cache: 'no-store' });
+                    const resData = await response.json();
+                    
+                    if (!resData.success) {
+                        throw new Error(resData.error || "Server cancellation failed");
+                    }
+                }
+
+                // 서버에서 성공한 경우에만 UI 갱신
+                registrations = registrations.filter(r => r.id !== deleteId);
+                saveRegistrations();
+
+                myRegisteredIds = myRegisteredIds.filter(id => id !== deleteId);
+                saveMyRegisteredIds();
+
+                closeModal();
+                showToast("교육 신청이 정상적으로 취소되었습니다.", "info");
+
+                const nameInput = document.getElementById("searchName");
+                const empIdInput = document.getElementById("searchEmpId");
+                if (currentRole === "user" && nameInput && nameInput.value.trim() && empIdInput && empIdInput.value.trim()) {
+                    performMySearch();
+                } else {
+                    updateStatusView();
+                }
+            } catch (e) {
+                console.error("Local cancel error:", e);
+                showToast("취소 처리 중 오류가 발생했습니다.", "error");
+            } finally {
+                if (confirmBtn) {
+                    confirmBtn.disabled = false;
+                    confirmBtn.textContent = originalText;
+                }
+            }
+        }
+
+        function showToast(message, type = "success") {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toastMessage");
+
+            toastMsg.textContent = message;
+
+            const icon = toast.querySelector(".toast-icon");
+            if (type === "success") {
+                icon.setAttribute("data-lucide", "check");
+                toast.style.borderColor = "var(--success)";
+            } else if (type === "info") {
+                icon.setAttribute("data-lucide", "info");
+                toast.style.borderColor = "var(--text-primary)";
+            } else {
+                icon.setAttribute("data-lucide", "alert-circle");
+                toast.style.borderColor = "var(--danger)";
+            }
+
+            lucide.createIcons();
+
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 4500);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g,
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+
+</html>
