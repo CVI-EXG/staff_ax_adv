@@ -2535,7 +2535,33 @@
                 return;
             }
 
-            // 2. Duplicate Check per Level
+            const submitBtn = form.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = "잔여석 확인 중...";
+            }
+
+            // 2. 백그라운드에서 실시간 최신 데이터를 먼저 불러와 정원 초과 방지
+            try {
+                const t = new Date().getTime();
+                const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
+                if (response.ok) {
+                    const rawData = await response.json();
+                    registrations = rawData.map(r => ({
+                        ...r,
+                        userEmpId: String(r.userEmpId),
+                        userName: String(r.userName),
+                        userDept: String(r.userDept),
+                        timestamp: String(r.timestamp)
+                    }));
+                    localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+                }
+            } catch (e) {
+                console.error("Failed to fetch live data before submit:", e);
+                // 실패 시 기존 캐시된 데이터로 계속 진행
+            }
+
+            // 3. Duplicate Check per Level (가장 최신 데이터로 검증)
             const hasDuplicate = registrations.some(
                 r => r.userName.toLowerCase() === userName.toLowerCase() &&
                     r.userEmpId.toLowerCase() === userEmpId.toLowerCase() &&
@@ -2543,36 +2569,56 @@
             );
             if (hasDuplicate) {
                 showToast("중복 신청입니다. 이미 신청된 내역이 있습니다.", "error");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                    lucide.createIcons();
+                }
                 isSubmitting = false;
                 return;
             }
 
-            // 3. Restricted Session Check (19~21차수 전용 대상자 대조)
+            // 4. Restricted Session Check (19~21차수 전용 대상자 대조)
             const selectedSession = SESSIONS.level2.find(s => s.id === sessionId);
             if (selectedSession) {
                 const isUserRestrictedTarget = RESTRICTED_SESSION_USERS.some(u => String(u) === String(userEmpId));
                 
                 if (selectedSession.restricted && !isUserRestrictedTarget) {
                     showToast("대상자가 아닙니다. (선택하신 차수는 대상자 전용입니다)", "error");
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                        lucide.createIcons();
+                    }
                     isSubmitting = false;
                     return;
                 }
                 
                 if (!selectedSession.restricted && isUserRestrictedTarget) {
                     showToast("기초 교육 이수자는 19~21차수만 신청 가능합니다.", "error");
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                        lucide.createIcons();
+                    }
                     isSubmitting = false;
                     return;
                 }
             }
 
-            // 4. Verify session capacity (현장 참석만 24명 정원 제한 적용, 온라인은 제한 없음)
+            // 5. Verify session capacity (최신 데이터 기준으로 잔여석 다시 확인)
             if (attendanceType === 'offline') {
                 const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
                 const offlineCount = registrations.filter(r => r.sessionId === sessionId && isOfflineReg(r)).length;
                 const capacityLimit = selectedSession ? (selectedSession.capacity || 24) : 24;
 
                 if (offlineCount >= capacityLimit) {
-                    showToast("선택하신 차수의 현장 참석 정원이 이미 마감되었습니다.", "error");
+                    showToast("선택하신 차수의 현장 참석 정원이 방금 마감되었습니다.", "error");
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                        lucide.createIcons();
+                    }
                     isSubmitting = false;
                     return;
                 }
@@ -2601,9 +2647,7 @@
                 sessionName
             };
 
-            const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
-                submitBtn.disabled = true;
                 submitBtn.textContent = "신청 처리 중...";
             }
 
