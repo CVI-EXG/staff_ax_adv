@@ -828,21 +828,21 @@
         /* Toast System */
         .toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            top: 24px;
+            left: 50%;
             background: #222222;
             border-left: 4px solid var(--primary);
             border-radius: var(--border-radius-sm);
             padding: 16px 24px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             z-index: 1000;
-            transform: translateY(100px);
+            transform: translate(-50%, -100px);
             opacity: 0;
-            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .toast.show {
-            transform: translateY(0);
+            transform: translate(-50%, 0);
             opacity: 1;
         }
 
@@ -1709,9 +1709,7 @@
                             </div>
                             <div class="overview-content">
                                 <span class="overview-label">대상자</span>
-                                <span class="overview-value" style="line-height: 1.3;">고가혁 Staff 전 구성원 (임원급 제외) <span
-                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*기초
-                                        교육 이수자는 19~21차수 대상</span></span>
+                                <span class="overview-value" style="line-height: 1.3;">고가혁 Staff 전 구성원 (임원급 제외) <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*기초 교육 이수자는 별도 차수 안내 예정</span></span>
                             </div>
                         </div>
                         <div class="overview-item">
@@ -1939,15 +1937,9 @@
                                 <div class="cal-cell disabled"><span class="cal-date">8</span></div>
                                 <div class="cal-cell disabled"><span class="cal-date">9</span></div>
                                 <div class="cal-cell disabled"><span class="cal-date">10</span></div>
-                                <div class="cal-cell selectable special-session" title="대상자 전용"
-                                    onclick="selectSessionFromCalendar('lv2_19', this)"><span
-                                        class="cal-date">11</span><span class="cal-session">19차수</span></div>
-                                <div class="cal-cell selectable special-session" title="대상자 전용"
-                                    onclick="selectSessionFromCalendar('lv2_20', this)"><span
-                                        class="cal-date">12</span><span class="cal-session">20차수</span></div>
-                                <div class="cal-cell selectable special-session" title="대상자 전용"
-                                    onclick="selectSessionFromCalendar('lv2_21', this)"><span
-                                        class="cal-date">13</span><span class="cal-session">21차수</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">11</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">12</span></div>
+                                <div class="cal-cell disabled"><span class="cal-date">13</span></div>
                                 <div class="cal-cell disabled refresh-disabled"><span class="cal-date">14</span><span
                                         class="cal-session"
                                         style="font-size: 0.55rem; letter-spacing: -0.5px;">Refresh</span></div>
@@ -1982,7 +1974,7 @@
                             </p>
                             <p id="offlineStatusHint"
                                 style="margin: 0 0 0 32px; font-size: 0.9rem; color: var(--text-main); font-weight: 500;">
-                                확인 버튼을 누른 후 신청서를 작성해 주세요
+                                확인 버튼을 누른 후 아래 신청서를 작성해 주세요.
                             </p>
                         </div>
                         <button type="button" class="btn"
@@ -2236,10 +2228,7 @@
                 { id: "lv2_15", name: "15차수 | 7/31(금)", text: "15차수 - 7/31(금) 09:00 ~ 17:00", capacity: 24 },
                 { id: "lv2_16", name: "16차수 | 8/4(화)", text: "16차수 - 8/4(화) 09:00 ~ 17:00", capacity: 24 },
                 { id: "lv2_17", name: "17차수 | 8/5(수)", text: "17차수 - 8/5(수) 09:00 ~ 17:00", capacity: 24 },
-                { id: "lv2_18", name: "18차수 | 8/6(목)", text: "18차수 - 8/6(목) 09:00 ~ 17:00", capacity: 24 },
-                { id: "lv2_19", name: "19차수 | 8/11(화)", text: "19차수 - 8/11(화) 09:00 ~ 17:00", capacity: 24, restricted: true },
-                { id: "lv2_20", name: "20차수 | 8/12(수)", text: "20차수 - 8/12(수) 09:00 ~ 17:00", capacity: 24, restricted: true },
-                { id: "lv2_21", name: "21차수 | 8/13(목)", text: "21차수 - 8/13(목) 09:00 ~ 17:00", capacity: 24, restricted: true }
+                { id: "lv2_18", name: "18차수 | 8/6(목)", text: "18차수 - 8/6(목) 09:00 ~ 17:00", capacity: 24 }
             ]
         };
 
@@ -2314,8 +2303,14 @@
 
             try {
                 const t = new Date().getTime();
-                const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
-                if (response.ok) {
+                
+                // 속도 개선: 2개의 무거운 네트워크 요청(전체 데이터, 대상자 명단)을 순차 대기하지 않고 병렬(Promise.all)로 동시 실행
+                const [response, eligibleResponse] = await Promise.all([
+                    fetch(GOOGLE_SCRIPT_URL + "?t=" + t).catch(e => { console.error("Data fetch error:", e); return null; }),
+                    fetch(GOOGLE_SCRIPT_URL + "?action=getEligibleUsers&t=" + t).catch(e => { console.error("Eligible users fetch error:", e); return null; })
+                ]);
+
+                if (response && response.ok) {
                     const rawData = await response.json();
                     registrations = rawData.map(r => ({
                         ...r,
@@ -2327,21 +2322,22 @@
                     localStorage.setItem("ax_registrations", JSON.stringify(registrations));
                     const sourceTextEl = document.getElementById("adminListSourceText");
                     if (sourceTextEl) sourceTextEl.textContent = "본 정보는 실시간 서버(구글 스프레드시트)와 연동된 전체 신청 목록입니다.";
+                } else if (!response) {
+                    throw new Error("Fetch failed");
                 } else {
                     throw new Error("HTTP Status " + response.status);
                 }
 
-                // 19~21차수 대상자 목록 동기화
-                try {
-                    const eligibleResponse = await fetch(GOOGLE_SCRIPT_URL + "?action=getEligibleUsers&t=" + t);
-                    if (eligibleResponse.ok) {
+                // 대상자 목록 처리
+                if (eligibleResponse && eligibleResponse.ok) {
+                    try {
                         const eligibleData = await eligibleResponse.json();
                         if (Array.isArray(eligibleData)) {
                             RESTRICTED_SESSION_USERS = eligibleData.map(u => String(u));
                         }
+                    } catch (e) {
+                        console.error("Failed to parse eligible users:", e);
                     }
-                } catch (e) {
-                    console.error("Failed to load eligible users:", e);
                 }
 
             } catch (e) {
@@ -2538,27 +2534,28 @@
             const submitBtn = form.querySelector('button[type="submit"]');
             if (submitBtn) {
                 submitBtn.disabled = true;
-                submitBtn.textContent = "잔여석 확인 중...";
+                submitBtn.innerHTML = '<i class="lucide-loader"></i> 잔여석 확인 중...';
             }
 
-            // 2. 백그라운드에서 실시간 최신 데이터를 먼저 불러와 정원 초과 방지
+            // 2. 백그라운드에서 실시간 최신 데이터를 먼저 불러와 정원 초과 방지 (필수 검증 단계)
             try {
-                const t = new Date().getTime();
-                const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
-                if (response.ok) {
-                    const rawData = await response.json();
-                    registrations = rawData.map(r => ({
-                        ...r,
-                        userEmpId: String(r.userEmpId),
-                        userName: String(r.userName),
-                        userDept: String(r.userDept),
-                        timestamp: String(r.timestamp)
-                    }));
-                    localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
+                    const t = new Date().getTime();
+                    const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
+                    if (response.ok) {
+                        const rawData = await response.json();
+                        registrations = rawData.map(r => ({
+                            ...r,
+                            userEmpId: String(r.userEmpId),
+                            userName: String(r.userName),
+                            userDept: String(r.userDept),
+                            timestamp: String(r.timestamp)
+                        }));
+                        localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+                    }
                 }
             } catch (e) {
                 console.error("Failed to fetch live data before submit:", e);
-                // 실패 시 기존 캐시된 데이터로 계속 진행
             }
 
             // 3. Duplicate Check per Level (가장 최신 데이터로 검증)
@@ -2578,24 +2575,13 @@
                 return;
             }
 
-            // 4. Restricted Session Check (19~21차수 전용 대상자 대조)
+            // 4. Restricted Session Check (기존 19~21차수 대상자는 신청 불가 안내)
             const selectedSession = SESSIONS.level2.find(s => s.id === sessionId);
             if (selectedSession) {
                 const isUserRestrictedTarget = RESTRICTED_SESSION_USERS.some(u => String(u) === String(userEmpId));
                 
-                if (selectedSession.restricted && !isUserRestrictedTarget) {
-                    showToast("대상자가 아닙니다. (선택하신 차수는 대상자 전용입니다)", "error");
-                    if (submitBtn) {
-                        submitBtn.disabled = false;
-                        submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
-                        lucide.createIcons();
-                    }
-                    isSubmitting = false;
-                    return;
-                }
-                
-                if (!selectedSession.restricted && isUserRestrictedTarget) {
-                    showToast("기초 교육 이수자는 19~21차수만 신청 가능합니다.", "error");
+                if (isUserRestrictedTarget) {
+                    showToast("별도 교육 안내 대상자 입니다.", "error");
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
@@ -2614,6 +2600,7 @@
 
                 if (offlineCount >= capacityLimit) {
                     showToast("선택하신 차수의 현장 참석 정원이 방금 마감되었습니다.", "error");
+                    populateSessions(); // 마감 상태를 즉시 화면(드롭다운, 리스트, 캘린더)에 반영
                     if (submitBtn) {
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
@@ -2652,7 +2639,29 @@
             }
 
             try {
-                // 즉시 로컬 데이터 갱신 (비동기 처리로 사용자 대기 시간 없앰)
+                // 먼저 구글 서버로 전송하여 검증 및 저장 (단일 요청으로 속도 빠름)
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
+                    const url = new URL(GOOGLE_SCRIPT_URL);
+                    url.searchParams.append('action', 'register');
+                    url.searchParams.append('attendanceType', attendanceType);
+                    url.searchParams.append('data', JSON.stringify(newReg));
+
+                    const response = await fetch(url.toString(), { method: 'GET' });
+                    const resData = await response.json();
+
+                    if (!resData.success) {
+                        showToast("신청 실패: " + (resData.error || "일시적인 오류"), "error");
+                        isSubmitting = false;
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                            lucide.createIcons();
+                        }
+                        return; // 실패 시 로컬 업데이트 취소
+                    }
+                }
+
+                // 서버 성공(또는 URL 미설정 테스트 환경)인 경우에만 로컬 갱신 및 완료 알림
                 registrations.unshift(newReg);
                 saveRegistrations();
                 myRegisteredIds.push(newId);
@@ -2664,7 +2673,7 @@
                 if (searchEmpIdEl) searchEmpIdEl.value = userEmpId;
 
                 updateStatusView();
-                setTimeout(() => performMySearch(), 50);
+                performMySearch(); // 조회 결과 갱신
 
                 setTimeout(() => {
                     const resultEl = document.getElementById("myRegistrationList");
@@ -2674,7 +2683,6 @@
                 form.reset();
                 populateSessions();
 
-                // 신청 완료 후 선택된 교육 UI 초기화
                 const sessionInfoEl = document.getElementById('selected-session-info');
                 if (sessionInfoEl) sessionInfoEl.style.display = 'none';
                 document.querySelectorAll('.cal-cell.selectable').forEach(el => el.classList.remove('selected'));
@@ -2682,40 +2690,9 @@
 
                 showToast("교육 신청이 정상적으로 완료되었습니다!");
 
-                // 백그라운드에서 구글 시트로 전송 (UI 멈춤 없음)
-                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
-                    const url = new URL(GOOGLE_SCRIPT_URL);
-                    url.searchParams.append('action', 'register');
-                    url.searchParams.append('attendanceType', attendanceType);
-                    url.searchParams.append('data', JSON.stringify(newReg));
-
-                    fetch(url.toString(), { method: 'GET' })
-                        .then(res => res.json())
-                        .then(resData => {
-                            if (!resData.success) {
-                                console.error("서버 처리 실패:", resData.error);
-                                // 서버 실패 시 롤백 (안전 장치)
-                                registrations = registrations.filter(r => r.id !== newId);
-                                myRegisteredIds = myRegisteredIds.filter(id => id !== newId);
-                                saveRegistrations();
-                                saveMyRegisteredIds();
-                                updateStatusView();
-                                showToast("신청 실패: " + (resData.error || "일시적인 오류"), "error");
-                            }
-                        })
-                        .catch(e => {
-                            console.error("서버 백그라운드 전송 에러:", e);
-                            registrations = registrations.filter(r => r.id !== newId);
-                            myRegisteredIds = myRegisteredIds.filter(id => id !== newId);
-                            saveRegistrations();
-                            saveMyRegisteredIds();
-                            updateStatusView();
-                            showToast("네트워크 오류로 신청되지 않았습니다.", "error");
-                        });
-                }
             } catch (e) {
-                console.error("Local registration failed:", e);
-                showToast("신청 처리 중 오류가 발생했습니다.", "error");
+                console.error("Registration sync failed:", e);
+                showToast("신청 처리 중 네트워크 오류가 발생했습니다.", "error");
             } finally {
                 isSubmitting = false;
                 if (submitBtn) {
@@ -2807,10 +2784,30 @@
                     }
                     listContainer.appendChild(item);
                 }
+
+                // 캘린더 UI(마감 상태) 동기화
+                const calCell = document.querySelector(`.cal-cell[onclick*="'${s.id}'"]`);
+                if (calCell) {
+                    const sessionSpan = calCell.querySelector('.cal-session');
+                    if (remaining <= 0 || s.inactive) {
+                        calCell.classList.remove('selectable');
+                        calCell.classList.add('disabled');
+                        if (!s.inactive && sessionSpan) {
+                            sessionSpan.innerHTML = '<span style="color:#ef4444; font-weight:700;">마감</span>';
+                        }
+                    } else {
+                        calCell.classList.add('selectable');
+                        calCell.classList.remove('disabled');
+                        if (sessionSpan && sessionSpan.textContent === '마감') {
+                            sessionSpan.textContent = s.text.split(" - ")[0];
+                        }
+                    }
+                }
             });
 
             if (select.value === "" && prevValue) {
                 document.getElementById('selected-session-info').style.display = 'none';
+                document.querySelectorAll('.cal-cell.selected').forEach(el => el.classList.remove('selected'));
             }
         }
 
@@ -3035,81 +3032,89 @@
                 return;
             }
 
-            // 조회 시 서버에서 최신 상태를 강제로 불러오기 (엑셀 삭제 실시간 반영)
-            const btn = document.querySelector('.my-reg-search button');
-            const originalText = btn ? btn.innerHTML : '';
-            if (btn) btn.innerHTML = '<i class="lucide-loader"></i> 동기화 중...';
-            await loadRegistrations();
-            if (btn) btn.innerHTML = originalText;
+            const renderResults = () => {
+                const matches = registrations.filter(
+                    r => r.userName.toLowerCase() === nameInput.toLowerCase() &&
+                        r.userEmpId.toLowerCase() === empIdInput.toLowerCase()
+                );
 
-            const matches = registrations.filter(
-                r => r.userName.toLowerCase() === nameInput.toLowerCase() &&
-                    r.userEmpId.toLowerCase() === empIdInput.toLowerCase()
-            );
+                const listContainer = document.getElementById("myRegistrationList");
+                listContainer.innerHTML = "";
 
-            const listContainer = document.getElementById("myRegistrationList");
-            listContainer.innerHTML = "";
-
-            if (matches.length === 0) {
-                listContainer.innerHTML = `
-            <div class="my-reg-empty">
-                <i data-lucide="help-circle"></i>
-                <p style="font-weight: 700; font-size: 1.05rem; color: var(--text-main); margin-bottom: 6px;">신청된 교육 내역이 없습니다.</p>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">
-                    입력하신 성명과 사번으로 등록된 교육 신청 내역을 찾을 수 없습니다.
-                </p>
-            </div>
-        `;
-                lucide.createIcons();
-                return;
-            }
-
-            let html = `<p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;"><strong style="color: var(--primary);">${escapeHtml(nameInput)}</strong>님의 신청 내역 ${matches.length}건이 조회되었습니다.</p>`;
-            matches.forEach(reg => {
-                let displaySessionName = reg.sessionName;
-                if (reg.levelText === '온라인' || reg.levelText.includes('온라인')) {
-                    displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+                if (matches.length === 0) {
+                    listContainer.innerHTML = `
+                <div class="my-reg-empty">
+                    <i data-lucide="help-circle"></i>
+                    <p style="font-weight: 700; font-size: 1.05rem; color: var(--text-main); margin-bottom: 6px;">신청된 교육 내역이 없습니다.</p>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        입력하신 성명과 사번으로 등록된 교육 신청 내역을 찾을 수 없습니다.
+                    </p>
+                </div>
+            `;
+                    lucide.createIcons();
+                    return;
                 }
 
-                const formattedTime = formatTimestamp(reg.timestamp);
+                let html = `<p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 12px;"><strong style="color: var(--primary);">${escapeHtml(nameInput)}</strong>님의 신청 내역 ${matches.length}건이 조회되었습니다.</p>`;
+                matches.forEach(reg => {
+                    let displaySessionName = reg.sessionName;
+                    if (reg.levelText === '온라인' || reg.levelText.includes('온라인')) {
+                        displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
+                    }
 
-                html += `
-            <div class="my-reg-card">
-                <div class="my-reg-info">
-                    <div class="my-reg-title">
-                        <span style="font-weight: 700; color: #111111;">${escapeHtml(reg.userName)}님의 신청 내역</span>
-                        <span class="status-pill" style="margin-left: 8px;">신청완료</span>
+                    const formattedTime = formatTimestamp(reg.timestamp);
+
+                    html += `
+                <div class="my-reg-card">
+                    <div class="my-reg-info">
+                        <div class="my-reg-title">
+                            <span style="font-weight: 700; color: #111111;">${escapeHtml(reg.userName)}님의 신청 내역</span>
+                            <span class="status-pill" style="margin-left: 8px;">신청완료</span>
+                        </div>
+                        <div class="my-reg-details">
+                            <div class="my-reg-detail-item">
+                                <i data-lucide="calendar"></i>
+                                <span><strong>신청 차수:</strong> ${escapeHtml(displaySessionName)}</span>
+                            </div>
+                            <div class="my-reg-detail-item">
+                                <i data-lucide="credit-card"></i>
+                                <span><strong>사번:</strong> ${escapeHtml(reg.userEmpId)}</span>
+                            </div>
+                            <div class="my-reg-detail-item">
+                                <i data-lucide="building-2"></i>
+                                <span><strong>소속 부서:</strong> ${escapeHtml(reg.userDept)}</span>
+                            </div>
+                            <div class="my-reg-detail-item">
+                                <i data-lucide="clock"></i>
+                                <span><strong>신청 시간:</strong> ${formattedTime}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="my-reg-details">
-                        <div class="my-reg-detail-item">
-                            <i data-lucide="calendar"></i>
-                            <span><strong>신청 차수:</strong> ${escapeHtml(displaySessionName)}</span>
-                        </div>
-                        <div class="my-reg-detail-item">
-                            <i data-lucide="credit-card"></i>
-                            <span><strong>사번:</strong> ${escapeHtml(reg.userEmpId)}</span>
-                        </div>
-                        <div class="my-reg-detail-item">
-                            <i data-lucide="building-2"></i>
-                            <span><strong>소속 부서:</strong> ${escapeHtml(reg.userDept)}</span>
-                        </div>
-                        <div class="my-reg-detail-item">
-                            <i data-lucide="clock"></i>
-                            <span><strong>신청 시간:</strong> ${formattedTime}</span>
-                        </div>
+                    <div class="my-reg-actions">
+                        <button class="btn btn-outline" style="border-color: #fca5a5; color: var(--danger);" onclick="openCancelModal('${reg.id}')">
+                            <i data-lucide="x-circle" style="vertical-align: middle; margin-right: 4px; width: 16px; height: 16px;"></i> 신청 취소
+                        </button>
                     </div>
                 </div>
-                <div class="my-reg-actions">
-                    <button class="btn btn-outline" style="border-color: #fca5a5; color: var(--danger);" onclick="openCancelModal('${reg.id}')">
-                        <i data-lucide="x-circle" style="vertical-align: middle; margin-right: 4px; width: 16px; height: 16px;"></i> 신청 취소
-                    </button>
-                </div>
-            </div>
-        `;
+            `;
+                });
+
+                listContainer.innerHTML = html;
+                lucide.createIcons();
+            };
+
+            // 1. 낙관적 UI: 조회 결과를 즉시 표시
+            renderResults();
+
+            // 2. 비동기 백그라운드 최신화 (조회 체감 속도 개선)
+            const btn = document.querySelector('.btn-secondary[onclick="performMySearch()"]');
+            const originalText = btn ? btn.innerHTML : '조회하기';
+            if (btn) btn.innerHTML = '<i class="lucide-loader"></i> 동기화 중...';
+            
+            loadRegistrations().then(() => {
+                if (btn) btn.innerHTML = originalText;
+                renderResults(); // 데이터 최신화 후 재렌더링
             });
-
-            listContainer.innerHTML = html;
-            lucide.createIcons();
         }
 
         async function refreshAdminData(btnElement) {
@@ -3218,35 +3223,39 @@
         async function confirmCancel() {
             if (!deleteId) return;
 
-            // 취소 버튼 비활성화 및 처리 중 표시 (필요 시 모달 내 버튼 제어)
+            const idToCancel = deleteId;
             const confirmBtn = document.getElementById("btnConfirmDelete");
             const originalText = confirmBtn ? confirmBtn.textContent : "신청 취소";
             if (confirmBtn) {
                 confirmBtn.disabled = true;
-                confirmBtn.textContent = "처리 중...";
+                confirmBtn.innerHTML = '<i class="lucide-loader"></i> 처리 중...';
             }
 
             try {
-                // 먼저 서버로 삭제 요청 전송 (await 사용)
+                // 백그라운드 전송 및 서버 동기화 기다림
                 if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
                     const url = new URL(GOOGLE_SCRIPT_URL);
                     url.searchParams.append('action', 'cancel');
-                    url.searchParams.append('id', deleteId);
-                    url.searchParams.append('t', Date.now()); // 캐시 방지
+                    url.searchParams.append('id', idToCancel);
+                    url.searchParams.append('t', Date.now());
 
                     const response = await fetch(url.toString(), { method: 'GET', cache: 'no-store' });
                     const resData = await response.json();
                     
                     if (!resData.success) {
-                        throw new Error(resData.error || "Server cancellation failed");
+                        showToast("취소 실패: " + (resData.error || "일시적인 오류"), "error");
+                        if (confirmBtn) {
+                            confirmBtn.disabled = false;
+                            confirmBtn.innerHTML = originalText;
+                        }
+                        return; // 실패 시 취소 중단
                     }
                 }
 
-                // 서버에서 성공한 경우에만 UI 갱신
-                registrations = registrations.filter(r => r.id !== deleteId);
+                // 서버 취소 성공 시 로컬 UI 업데이트
+                registrations = registrations.filter(r => r.id !== idToCancel);
                 saveRegistrations();
-
-                myRegisteredIds = myRegisteredIds.filter(id => id !== deleteId);
+                myRegisteredIds = myRegisteredIds.filter(id => id !== idToCancel);
                 saveMyRegisteredIds();
 
                 closeModal();
@@ -3260,8 +3269,8 @@
                     updateStatusView();
                 }
             } catch (e) {
-                console.error("Local cancel error:", e);
-                showToast("취소 처리 중 오류가 발생했습니다.", "error");
+                console.error("Cancel sync error:", e);
+                showToast("취소 처리 중 네트워크 오류가 발생했습니다.", "error");
             } finally {
                 if (confirmBtn) {
                     confirmBtn.disabled = false;
@@ -3294,7 +3303,7 @@
 
             setTimeout(() => {
                 toast.classList.remove("show");
-            }, 4500);
+            }, 2500);
         }
 
         function escapeHtml(str) {
