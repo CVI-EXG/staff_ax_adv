@@ -9,7 +9,7 @@
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
     <style>
         /* Custom properties for LG Electronics Brand Theme (Light Mode) */
         :root {
@@ -83,36 +83,6 @@
             overflow-x: hidden;
             position: relative;
             padding-bottom: 60px;
-        }
-
-        /* Light Background soft glow effects */
-        .bg-glow {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(130px);
-            opacity: 0.45;
-            z-index: -1;
-            pointer-events: none;
-            transform: translateZ(0);
-            will-change: filter;
-        }
-
-        .bg-glow-1 {
-            background: radial-gradient(ellipse at 25% 30%, rgba(147, 51, 234, 0.25) 0%, rgba(147, 51, 234, 0.08) 45%, rgba(255, 255, 255, 0) 70%);
-            top: -150px;
-            right: -100px;
-            width: 900px;
-            height: 900px;
-            transform-origin: 35% 65%;
-        }
-
-        .bg-glow-2 {
-            background: radial-gradient(ellipse at 75% 70%, rgba(168, 85, 247, 0.22) 0%, rgba(168, 85, 247, 0.08) 45%, rgba(255, 255, 255, 0) 70%);
-            bottom: -200px;
-            left: -200px;
-            width: 1000px;
-            height: 1000px;
-            transform-origin: 65% 35%;
         }
 
         /* Layout container - 전체 폭 1200px */
@@ -1660,9 +1630,7 @@
 </head>
 
 <body>
-    <!-- Background Gradients -->
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
+    <!-- Background Gradients removed for performance optimization -->
 
     <div class="container">
         <!-- Role Switcher -->
@@ -2065,7 +2033,7 @@
                                 style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
                                 <i data-lucide="search"
                                     style="width: 16px; height: 16px; color: var(--primary); flex-shrink: 0;"></i>
-                                성명과 사번을 입력하면 신청한 교육을 확인하고 취소할 수 있습니다.
+                                성명과 사번을 입력하면 신청한 교육을 확인하고 취소할 수 있습니다. (교육일 5일 전까지 취소 가능)
                             </p>
                             <div class="form-row" style="margin-bottom: 0;">
                                 <div class="form-group" style="margin-bottom: 0; min-width: 150px;">
@@ -2566,8 +2534,12 @@
             try {
                 if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL !== "여기에_구글_스프레드시트_웹_앱_URL을_넣으세요") {
                     const t = new Date().getTime();
-                    const response = await fetch(GOOGLE_SCRIPT_URL + "?t=" + t);
-                    if (response.ok) {
+                    const [response, eligibleResponse] = await Promise.all([
+                        fetch(GOOGLE_SCRIPT_URL + "?t=" + t).catch(e => null),
+                        fetch(GOOGLE_SCRIPT_URL + "?action=getEligibleUsers&t=" + t).catch(e => null)
+                    ]);
+                    
+                    if (response && response.ok) {
                         const rawData = await response.json();
                         registrations = rawData.map(r => ({
                             ...r,
@@ -2577,6 +2549,11 @@
                             timestamp: String(r.timestamp)
                         }));
                         localStorage.setItem("ax_registrations", JSON.stringify(registrations));
+                    }
+                    
+                    if (eligibleResponse && eligibleResponse.ok) {
+                        ELIGIBLE_SESSION_USERS = await eligibleResponse.json();
+                        localStorage.setItem("ax_eligible_users", JSON.stringify(ELIGIBLE_SESSION_USERS));
                     }
                 }
             } catch (e) {
@@ -3184,15 +3161,14 @@
                 return;
             }
 
-            const headers = ["신청 시간", "성명", "사번", "소속 부서", "신청 교육 (차수)", "상태"];
+            const headers = ["신청 시간", "성명", "사번", "소속 부서", "신청 교육 (차수)"];
 
             const rows = registrations.map(r => [
                 formatTimestamp(r.timestamp),
                 r.userName || "",
                 r.userEmpId || "",
                 r.userDept || "",
-                r.sessionName || "",
-                "신청완료"
+                (r.sessionName || "").split(" - ")[0].trim()
             ]);
 
             const escapeCsvValue = (val) => {
@@ -3210,7 +3186,7 @@
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const day = String(now.getDate()).padStart(2, '0');
             const dateStr = `${year}${month}${day}`;
-            const filename = `AX_교육_신청현황_${dateStr}.csv`;
+            const filename = `AX 기본교육_신청현황_${dateStr}.csv`;
 
             const csvWithBOM = "\uFEFF" + csvContent;
             const blob = new Blob([csvWithBOM], { type: 'text/csv;charset=utf-8;' });
