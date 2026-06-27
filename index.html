@@ -51,6 +51,19 @@
             --border-radius-sm: 4px;
         }
 
+        /* Custom Animation for D-5 */
+        .blink-d5 {
+            color: var(--primary);
+            font-weight: 800;
+            animation: blinkD5 1.5s infinite;
+            font-size: 1.1em;
+        }
+
+        @keyframes blinkD5 {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         /* Base Styles */
         * {
             box-sizing: border-box;
@@ -80,21 +93,8 @@
             opacity: 0.45;
             z-index: -1;
             pointer-events: none;
-            animation: rotateGlow 50s ease-in-out infinite alternate;
-        }
-
-        @keyframes rotateGlow {
-            0% {
-                transform: rotate(0deg) scale(1) translate(0px, 0px);
-            }
-
-            50% {
-                transform: rotate(180deg) scale(1.1) translate(25px, -15px);
-            }
-
-            100% {
-                transform: rotate(360deg) scale(1.02) translate(-15px, 25px);
-            }
+            transform: translateZ(0);
+            will-change: filter;
         }
 
         .bg-glow-1 {
@@ -113,8 +113,6 @@
             width: 1000px;
             height: 1000px;
             transform-origin: 65% 35%;
-            animation-direction: alternate-reverse;
-            animation-duration: 60s;
         }
 
         /* Layout container - 전체 폭 1200px */
@@ -1709,7 +1707,7 @@
                             </div>
                             <div class="overview-content">
                                 <span class="overview-label">대상자</span>
-                                <span class="overview-value" style="line-height: 1.3;">고가혁 Staff 전 구성원 (임원급 제외) <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*기초 교육 이수자는 별도 차수 안내 예정</span></span>
+                                <span class="overview-value" style="line-height: 1.3;">고가혁 Staff 전 구성원 (임원급 제외) <br><span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">*기초 교육 이수자는 기본 교육 별도 차수 운영</span></span>
                             </div>
                         </div>
                         <div class="overview-item">
@@ -1718,7 +1716,7 @@
                             </div>
                             <div class="overview-content">
                                 <span class="overview-label">교육 방식</span>
-                                <span class="overview-value" style="line-height: 1.6;">오프라인(현장) 교육 <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">* 온라인 운영 없음</span></span>
+                                <span class="overview-value" style="line-height: 1.6;">오프라인(현장) 교육 <br><span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">* 온라인 운영 없음</span></span>
                             </div>
                         </div>
                         <div class="overview-item">
@@ -1727,7 +1725,7 @@
                             </div>
                             <div class="overview-content">
                                 <span class="overview-label">교육 기간</span>
-                                <span class="overview-value">7/2(목) ~ 8/13(목) / 21개 차수 중 1개 선택</span>
+                                <span class="overview-value">7/2(목) ~ 8/5(수), 17개 차수 중 1개 선택</span>
                             </div>
                         </div>
                         <div class="overview-item">
@@ -1736,9 +1734,8 @@
                             </div>
                             <div class="overview-content">
                                 <span class="overview-label">교육 장소</span>
-                                <span class="overview-value" style="line-height: 1.3;">사이언스파크 W6동 6층 수도권아카데미 4번 교육장
-                                    <span
-                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">* 대중 교통 이용</span></span>
+                                <span class="overview-value" style="line-height: 1.3;">사이언스파크 W6동 6층 수도권아카데미 4번 교육장<br><span
+                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">* 대중 교통 이용 (주차 지원 불가)</span></span>
                             </div>
                         </div>
                         <div class="overview-item">
@@ -1746,10 +1743,9 @@
                                 <i data-lucide="clock-4"></i>
                             </div>
                             <div class="overview-content">
-                                <span class="overview-label">신청 기간</span>
-                                <span class="overview-value" style="line-height: 1.3;">6/17(수) ~ 6/24(수) <span
-                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400; margin-left: 4px;">*신청
-                                        기간 이후 변경은 교육 담당자에게 별도 요청</span></span>
+                                <span class="overview-label">변경 기간</span>
+                                <span class="overview-value" style="line-height: 1.3;">교육 일 <span class="blink-d5">D-5</span>까지 잔여석 신청 및 취소 가능 <br><span
+                                        style="font-size: 0.75rem; color: var(--text-muted); font-weight: 400;">* 예) 7/7 교육 신청자는 7/2까지 취소 가능</span></span>
                             </div>
                         </div>
                     </div>
@@ -1805,8 +1801,13 @@
 
         <!-- Calendar Section -->
         <section class="calendar-section" id="calendar-section">
-            <h2 class="section-title"><i data-lucide="calendar-days"></i> 교육 차수 안내</h2>
-            <p class="blinking-text" style="text-align: left; margin-bottom: 24px;">원하시는 차수를 선택하신 후, 하단에서 신청서를 작성해주세요.</p>
+            <h2 class="section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span><i data-lucide="calendar-days"></i> 교육 차수 안내</span>
+                <span id="adminRefreshBadge" onclick="refreshAdminData(this)" style="display: none; cursor: pointer; background-color: #f1f5f9; color: #475569; padding: 6px 12px; font-size: 0.8rem; border: 1px solid #cbd5e1; border-radius: 6px; align-items: center; gap: 6px; font-weight: 600; transition: all 0.2s;" onmouseover="this.style.backgroundColor='#e2e8f0'" onmouseout="this.style.backgroundColor='#f1f5f9'">
+                    <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i> 새로고침
+                </span>
+            </h2>
+            <p class="blinking-text" style="text-align: left; margin-bottom: 24px;">잔여석은 교육일 5일 전까지 신청 가능합니다.</p>
 
             <div class="calendar-info-grid">
                 <!-- Left: Session List -->
@@ -1930,9 +1931,7 @@
                                 <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_17', this)">
                                     <span class="cal-date">5</span><span class="cal-session">17차수</span>
                                 </div>
-                                <div class="cal-cell selectable" onclick="selectSessionFromCalendar('lv2_18', this)">
-                                    <span class="cal-date">6</span><span class="cal-session">18차수</span>
-                                </div>
+                                <div class="cal-cell disabled"><span class="cal-date">6</span></div>
                                 <div class="cal-cell disabled"><span class="cal-date">7</span></div>
                                 <div class="cal-cell disabled"><span class="cal-date">8</span></div>
                                 <div class="cal-cell disabled"><span class="cal-date">9</span></div>
@@ -1988,7 +1987,7 @@
 
         <!-- Registration Form Section -->
         <section class="registration-section" id="registration-form-section">
-            <h2 class="section-title"><i data-lucide="edit-3"></i> 교육 신청서 작성</h2>
+            <h2 class="section-title"><i data-lucide="edit-3"></i> 교육 신청서 작성<span id="adminFormBadge" class="badge" style="display: none; margin-bottom: 0; margin-left: 10px; background-color: var(--primary); color: white; padding: 4px 10px; font-size: 0.75rem; border: none;">관리자 모드</span></h2>
 
             <div class="form-wrapper">
                 <form id="regForm" onsubmit="handleFormSubmit(event)">
@@ -1999,7 +1998,7 @@
                     <div class="form-group" id="session-select-group" style="display: none; position: relative;">
                         <label for="sessionSelect" class="form-label">희망 차수 선택 <span class="required">*</span></label>
                         <div class="select-wrapper">
-                            <select id="sessionSelect" name="session" onchange="handleSessionChange(this.value)">
+                            <select id="sessionSelect" name="session">
                                 <option value="" disabled selected>원하시는 차수를 선택하세요.</option>
                             </select>
                             <i data-lucide="chevron-down" class="select-arrow"></i>
@@ -2035,7 +2034,7 @@
                     </div>
 
                     <div class="form-footer" style="justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                        <div style="font-size: 0.95rem; color: var(--text-main); display: flex; align-items: center; gap: 8px; font-weight: 600;">
+                        <div id="laptopMessage" style="font-size: 0.95rem; color: var(--text-main); display: flex; align-items: center; gap: 8px; font-weight: 600;">
                             <i data-lucide="laptop" style="color: var(--primary); width: 20px; height: 20px;"></i>
                             실습을 위해 노트북을 지참하여 참석해 주세요.
                         </div>
@@ -2228,7 +2227,7 @@
                 { id: "lv2_15", name: "15차수 | 7/31(금)", text: "15차수 - 7/31(금) 09:00 ~ 17:00", capacity: 24 },
                 { id: "lv2_16", name: "16차수 | 8/4(화)", text: "16차수 - 8/4(화) 09:00 ~ 17:00", capacity: 24 },
                 { id: "lv2_17", name: "17차수 | 8/5(수)", text: "17차수 - 8/5(수) 09:00 ~ 17:00", capacity: 24 },
-                { id: "lv2_18", name: "18차수 | 8/6(목)", text: "18차수 - 8/6(목) 09:00 ~ 17:00", capacity: 24 }
+                { id: "lv2_18", name: "18차수 | 8/6(목)", text: "18차수 - 8/6(목) 09:00 ~ 17:00", capacity: 24, hidden: true }
             ]
         };
 
@@ -2244,6 +2243,24 @@
         let deleteId = null;
         let currentAdminPage = 1;
         const ADMIN_ITEMS_PER_PAGE = 10;
+
+        function isDeadlinePassed(sessionId) {
+            if (currentRole === "admin") return false;
+
+            const session = SESSIONS.level2.find(s => s.id === sessionId);
+            if (session) {
+                const match = session.name.match(/(\d+)\/(\d+)/);
+                if (match) {
+                    const month = parseInt(match[1], 10);
+                    const day = parseInt(match[2], 10);
+                    // 5-day prior deadline means midnight 4 days before the session day.
+                    const deadline = new Date(2026, month - 1, day - 4);
+                    const now = new Date();
+                    return now.getTime() >= deadline.getTime();
+                }
+            }
+            return false;
+        }
 
         // Initialize the page
         document.addEventListener("DOMContentLoaded", () => {
@@ -2403,6 +2420,7 @@
                 showToast("관리자 모드로 전환되었습니다.");
             }
 
+            populateSessions();
             updateStatusView();
         }
 
@@ -2457,22 +2475,29 @@
         function updateStatusView() {
             const userContainer = document.getElementById("userStatusContainer");
             const adminContainer = document.getElementById("adminStatusContainer");
+            
+            const adminFormBadge = document.getElementById("adminFormBadge");
+            const laptopMessage = document.getElementById("laptopMessage");
+            const adminRefreshBadge = document.getElementById("adminRefreshBadge");
 
             if (currentRole === "admin") {
                 userContainer.style.display = "none";
                 adminContainer.style.display = "block";
                 document.getElementById("adminTabContentRegs").style.display = "block";
+                if (adminFormBadge) adminFormBadge.style.display = "inline-block";
+                if (laptopMessage) laptopMessage.style.display = "none";
+                if (adminRefreshBadge) adminRefreshBadge.style.display = "inline-flex";
                 renderAdminTable();
             } else {
                 userContainer.style.display = "block";
                 adminContainer.style.display = "none";
+                if (adminFormBadge) adminFormBadge.style.display = "none";
+                if (laptopMessage) laptopMessage.style.display = "flex";
+                if (adminRefreshBadge) adminRefreshBadge.style.display = "none";
                 renderUserView();
             }
         }
 
-        function handleSessionChange(sessionId) {
-            // Session Highlight 로직 필요시 추가
-        }
 
         function showFieldTooltip(groupId, message) {
             document.querySelectorAll('.field-tooltip').forEach(t => t.remove());
@@ -2610,6 +2635,18 @@
                     return;
                 }
             }
+            
+            // 6. Deadline check (5일 전 마감)
+            if (isDeadlinePassed(sessionId)) {
+                showToast("차수 변경 기간이 마감 되었습니다.", "error");
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i data-lucide="check-circle-2"></i> 교육 신청 완료하기';
+                    lucide.createIcons();
+                }
+                isSubmitting = false;
+                return;
+            }
 
             let sessionName = selectedSession ? selectedSession.text : "";
             if (attendanceType === 'online') {
@@ -2716,13 +2753,16 @@
             const listContainer = document.getElementById("session-list-container");
             if (listContainer) listContainer.innerHTML = "";
 
-            const attendanceType = 'offline';
-
             SESSIONS.level2.forEach(s => {
+                if (s.hidden) return;
                 const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
                 const offlineCount = (registrations || []).filter(r => r.sessionId === s.id && isOfflineReg(r)).length;
                 const limit = s.capacity || 24;
-                const remaining = limit - offlineCount;
+                const actualRemaining = limit - offlineCount;
+                let remaining = actualRemaining;
+                if (isDeadlinePassed(s.id)) {
+                    remaining = 0; // 마감 기한 지남
+                }
 
                 // Populate Hidden Select
                 const opt = document.createElement('option');
@@ -2735,9 +2775,9 @@
                     badgeText = '<span class="sl-badge" style="color:#adb5bd;">예비 차수</span>';
                 } else if (s.restricted) {
                     if (remaining <= 0) {
-                        opt.textContent = `${s.name.split(' | ')[0]} (대상자 전용 / 마감)`;
+                        opt.textContent = `${s.name.split(' | ')[0]} (대상자 전용 / 마감: ${actualRemaining}/${limit})`;
                         opt.disabled = true;
-                        badgeText = `<span class="sl-badge" style="color:#64748b;">대상자 전용 <span style="font-weight:400;">(마감)</span></span>`;
+                        badgeText = `<span class="sl-badge" style="color:#64748b;">대상자 전용 <span style="font-weight:400;">(마감: ${actualRemaining}/${limit})</span></span>`;
                     } else {
                         opt.textContent = `${s.name.split(' | ')[0]} (대상자 전용 / 잔여석: ${remaining}/${limit})`;
                         badgeText = `<span class="sl-badge" style="color:#64748b;">대상자 전용 <span style="font-weight:400; opacity:0.8;">(잔여석: ${remaining}/${limit})</span></span>`;
@@ -2746,9 +2786,9 @@
                     const colorStyle = remaining < 5 ? "color: var(--primary);" : "color: #28a745;";
 
                     if (remaining <= 0) {
-                        opt.textContent = `${s.name.split(' | ')[0]} (마감)`;
+                        opt.textContent = `${s.name.split(' | ')[0]} (마감: ${actualRemaining}/${limit})`;
                         opt.disabled = true;
-                        badgeText = `<span class="sl-badge" style="color:#adb5bd;">마감</span>`;
+                        badgeText = `<span class="sl-badge" style="color:#adb5bd;">마감: ${actualRemaining}/${limit}</span>`;
                     } else {
                         opt.textContent = `${s.name.split(' | ')[0]} (잔여석: ${remaining}/${limit})`;
                         badgeText = `<span class="sl-badge" style="${colorStyle}">잔여석: ${remaining}/${limit}</span>`;
@@ -2789,18 +2829,15 @@
                 const calCell = document.querySelector(`.cal-cell[onclick*="'${s.id}'"]`);
                 if (calCell) {
                     const sessionSpan = calCell.querySelector('.cal-session');
+                    if (sessionSpan) {
+                        sessionSpan.textContent = s.text.split(" - ")[0];
+                    }
                     if (remaining <= 0 || s.inactive) {
                         calCell.classList.remove('selectable');
                         calCell.classList.add('disabled');
-                        if (!s.inactive && sessionSpan) {
-                            sessionSpan.innerHTML = '<span style="color:#ef4444; font-weight:700;">마감</span>';
-                        }
                     } else {
                         calCell.classList.add('selectable');
                         calCell.classList.remove('disabled');
-                        if (sessionSpan && sessionSpan.textContent === '마감') {
-                            sessionSpan.textContent = s.text.split(" - ")[0];
-                        }
                     }
                 }
             });
@@ -2818,7 +2855,10 @@
                 const isOfflineReg = (r) => r.levelText && (r.levelText.includes('오프라인') || r.levelText === 'offline');
                 const offlineCount = (registrations || []).filter(r => r.sessionId === session.id && isOfflineReg(r)).length;
                 const limit = session.capacity || 24;
-                const remaining = limit - offlineCount;
+                let remaining = limit - offlineCount;
+                if (isDeadlinePassed(session.id)) {
+                    remaining = 0; // 마감 기한 지남
+                }
 
                 if (remaining <= 0) {
                     showToast("선택하신 차수는 마감되었습니다.", "error");
@@ -3189,9 +3229,15 @@
         }
 
         function openCancelModal(id) {
-            deleteId = id;
-            const reg = registrations.find(r => r.id === id);
+            deleteId = String(id);
+            const reg = registrations.find(r => String(r.id) === deleteId);
             if (!reg) return;
+
+            if (isDeadlinePassed(reg.sessionId)) {
+                showToast("차수 변경 기간이 마감 되었습니다.<br><span style='font-size: 0.85rem; font-weight: 500; opacity: 0.9;'>* 교육 취소는 5일 전까지만 가능합니다.</span>", "error");
+                deleteId = null;
+                return;
+            }
 
             let displaySessionName = reg.sessionName;
             if (reg.levelText === '온라인' || reg.levelText.includes('온라인')) {
@@ -3253,10 +3299,12 @@
                 }
 
                 // 서버 취소 성공 시 로컬 UI 업데이트
-                registrations = registrations.filter(r => r.id !== idToCancel);
+                registrations = registrations.filter(r => String(r.id) !== String(idToCancel));
                 saveRegistrations();
-                myRegisteredIds = myRegisteredIds.filter(id => id !== idToCancel);
+                myRegisteredIds = myRegisteredIds.filter(id => String(id) !== String(idToCancel));
                 saveMyRegisteredIds();
+                
+                populateSessions();
 
                 closeModal();
                 showToast("교육 신청이 정상적으로 취소되었습니다.", "info");
@@ -3283,7 +3331,7 @@
             const toast = document.getElementById("toast");
             const toastMsg = document.getElementById("toastMessage");
 
-            toastMsg.textContent = message;
+            toastMsg.innerHTML = message;
 
             const icon = toast.querySelector(".toast-icon");
             if (type === "success") {
