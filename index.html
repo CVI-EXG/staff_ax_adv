@@ -2087,17 +2087,24 @@
                         </div>
                     </div>
 
+                    <!-- 이름 검색 창 -->
+                    <div style="margin-bottom: 16px; display: flex; gap: 10px; align-items: center; background-color: #f8fafc; padding: 16px; border: 1px solid var(--border-color); border-radius: var(--border-radius-md);">
+                        <i data-lucide="search" style="color: var(--primary); width: 20px; height: 20px;"></i>
+                        <input type="text" id="adminSearchName" placeholder="성명 검색 (입력 후 엔터)" style="padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: var(--border-radius-md); font-size: 0.95rem; outline: none; width: 250px; background-color: #ffffff;" onkeypress="if(event.key === 'Enter') searchAdminTable()">
+                        <button type="button" class="btn btn-secondary" onclick="searchAdminTable()" style="height: 42px; padding: 0 20px; font-size: 0.9rem; width: auto;">검색 및 이동</button>
+                    </div>
+
                     <div class="table-container">
                         <table class="status-table" id="statusTable">
                             <thead>
                                 <tr>
                                     <th style="width: 50px; text-align: center;">No.</th>
-                                    <th>신청 시간</th>
-                                    <th>성명</th>
-                                    <th>사번</th>
-                                    <th>소속 부서</th>
-                                    <th>신청 교육 (차수)</th>
-                                    <th>상태</th>
+                                    <th onclick="sortAdminTable('timestamp')" style="cursor: pointer;" title="클릭하여 정렬">신청 시간 <span class="sort-icon" id="sortIcon-timestamp" style="color: var(--primary);"></span></th>
+                                    <th onclick="sortAdminTable('userName')" style="cursor: pointer;" title="클릭하여 정렬">성명 <span class="sort-icon" id="sortIcon-userName" style="color: var(--primary);"></span></th>
+                                    <th onclick="sortAdminTable('userEmpId')" style="cursor: pointer;" title="클릭하여 정렬">사번 <span class="sort-icon" id="sortIcon-userEmpId" style="color: var(--primary);"></span></th>
+                                    <th onclick="sortAdminTable('userDept')" style="cursor: pointer;" title="클릭하여 정렬">소속 부서 <span class="sort-icon" id="sortIcon-userDept" style="color: var(--primary);"></span></th>
+                                    <th onclick="sortAdminTable('sessionName')" style="cursor: pointer;" title="클릭하여 정렬">신청 교육 (차수) <span class="sort-icon" id="sortIcon-sessionName" style="color: var(--primary);"></span></th>
+                                    <th onclick="sortAdminTable('sessionDate')" style="cursor: pointer;" title="클릭하여 정렬">교육 일자 <span class="sort-icon" id="sortIcon-sessionDate" style="color: var(--primary);"></span></th>
                                     <th>관리</th>
                                 </tr>
                             </thead>
@@ -2949,6 +2956,12 @@
                     displaySessionName = displaySessionName.replace(/\(사이언스파크[^)]+\)/, '(웹엑스)');
                 }
 
+                let sessionDateStr = "";
+                const nameParts = displaySessionName.split(" - ");
+                if (nameParts.length > 1) {
+                    sessionDateStr = nameParts[1].split(" ")[0]; // "7/2(목)" 등 추출
+                }
+
                 const formattedTime = formatTimestamp(reg.timestamp);
                 const rowNum = index + 1;
 
@@ -2958,8 +2971,8 @@
             <td style="font-weight: 600;">${escapeHtml(String(reg.userName))}</td>
             <td>${escapeHtml(String(reg.userEmpId))}</td>
             <td>${escapeHtml(String(reg.userDept))}</td>
-            <td>${escapeHtml(displaySessionName.includes(" - ") ? displaySessionName.split(" - ")[0] : displaySessionName.includes(":") ? displaySessionName.split(":")[0] : displaySessionName)}</td>
-            <td><span class="status-pill">신청완료</span></td>
+            <td>${escapeHtml(nameParts[0])}</td>
+            <td>${escapeHtml(sessionDateStr)}</td>
             <td>
                 <button class="btn-table-cancel" onclick="openCancelModal('${reg.id}')">취소</button>
             </td>
@@ -2968,6 +2981,130 @@
             });
 
             renderPagination(totalPages);
+        }
+
+        let currentSortColumn = "";
+        let currentSortOrder = "asc";
+
+        function sortAdminTable(column) {
+            if (currentSortColumn === column) {
+                currentSortOrder = currentSortOrder === "asc" ? "desc" : "asc";
+            } else {
+                currentSortColumn = column;
+                currentSortOrder = "asc";
+            }
+            
+            registrations.sort((a, b) => {
+                let valA, valB;
+                if (column === 'sessionDate') {
+                    valA = parseSessionDateForSort(a.sessionName);
+                    valB = parseSessionDateForSort(b.sessionName);
+                } else if (column === 'sessionName') {
+                    valA = parseInt((a.sessionName || "").split("차수")[0]) || 0;
+                    valB = parseInt((b.sessionName || "").split("차수")[0]) || 0;
+                } else if (column === 'timestamp') {
+                    const timeA = new Date(a.timestamp).getTime();
+                    const timeB = new Date(b.timestamp).getTime();
+                    valA = isNaN(timeA) ? 0 : timeA;
+                    valB = isNaN(timeB) ? 0 : timeB;
+                } else {
+                    valA = String(a[column] || "").toLowerCase();
+                    valB = String(b[column] || "").toLowerCase();
+                }
+
+                if (valA < valB) return currentSortOrder === "asc" ? -1 : 1;
+                if (valA > valB) return currentSortOrder === "asc" ? 1 : -1;
+                return 0;
+            });
+
+            document.querySelectorAll('.sort-icon').forEach(el => el.innerHTML = '');
+            const iconEl = document.getElementById('sortIcon-' + column);
+            if (iconEl) {
+                iconEl.innerHTML = currentSortOrder === "asc" ? ' ▲' : ' ▼';
+            }
+
+            currentAdminPage = 1; // 정렬 시 첫 페이지로 이동
+            renderAdminTable();
+        }
+
+        function parseSessionDateForSort(sessionName) {
+            if (!sessionName) return "";
+            const parts = sessionName.split(" - ");
+            if (parts.length > 1) {
+                const datePart = parts[1].split("(")[0].trim();
+                const dm = datePart.split("/");
+                if (dm.length === 2) {
+                    return dm[0].padStart(2, '0') + dm[1].padStart(2, '0');
+                }
+            }
+            return sessionName;
+        }
+
+        let lastAdminSearchName = "";
+        let lastAdminSearchIndex = -1;
+
+        function searchAdminTable() {
+            const searchName = document.getElementById("adminSearchName").value.trim().toLowerCase();
+            if (!searchName) {
+                showToast("검색할 성명을 입력해주세요.", "error");
+                lastAdminSearchName = "";
+                lastAdminSearchIndex = -1;
+                return;
+            }
+
+            if (searchName !== lastAdminSearchName) {
+                lastAdminSearchName = searchName;
+                lastAdminSearchIndex = -1;
+            }
+
+            // 일치하는 모든 인덱스 찾기
+            const matchIndices = [];
+            registrations.forEach((r, idx) => {
+                if (String(r.userName).toLowerCase() === searchName) {
+                    matchIndices.push(idx);
+                }
+            });
+
+            if (matchIndices.length === 0) {
+                showToast("검색 결과가 없습니다.", "error");
+                return;
+            }
+
+            // 현재 검색 위치 다음의 결과를 찾음
+            let nextMatchIndex = matchIndices.find(idx => idx > lastAdminSearchIndex);
+            
+            // 다음 결과가 없으면 처음으로 돌아감
+            if (nextMatchIndex === undefined) {
+                nextMatchIndex = matchIndices[0];
+                if (matchIndices.length > 1) {
+                    showToast("마지막 결과입니다. 처음으로 돌아갑니다.", "info");
+                }
+            }
+            
+            lastAdminSearchIndex = nextMatchIndex;
+            const index = nextMatchIndex;
+
+            // 페이지 이동
+            const targetPage = Math.floor(index / ADMIN_ITEMS_PER_PAGE) + 1;
+            currentAdminPage = targetPage;
+            renderAdminTable();
+
+            // 스크롤 및 하이라이트
+            const tbody = document.getElementById("statusTableBody");
+            const rows = tbody.querySelectorAll("tr");
+            const rowInPage = index % ADMIN_ITEMS_PER_PAGE;
+            
+            if (rows[rowInPage]) {
+                rows[rowInPage].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                rows[rowInPage].style.backgroundColor = 'rgba(255, 30, 56, 0.15)';
+                rows[rowInPage].style.transition = 'background-color 0.5s';
+                
+                setTimeout(() => {
+                    if (rows[rowInPage]) {
+                        rows[rowInPage].style.backgroundColor = '';
+                    }
+                }, 3000);
+            }
         }
 
         function renderPagination(totalPages) {
@@ -3161,15 +3298,20 @@
                 return;
             }
 
-            const headers = ["신청 시간", "성명", "사번", "소속 부서", "신청 교육 (차수)"];
+            const headers = ["신청 시간", "성명", "사번", "소속 부서", "신청 교육 (차수)", "교육 일자"];
 
-            const rows = registrations.map(r => [
-                formatTimestamp(r.timestamp),
-                r.userName || "",
-                r.userEmpId || "",
-                r.userDept || "",
-                (r.sessionName || "").split(" - ")[0].trim()
-            ]);
+            const rows = registrations.map(r => {
+                const nameParts = (r.sessionName || "").split(" - ");
+                const sessionDateStr = nameParts.length > 1 ? nameParts[1].split(" ")[0] : "";
+                return [
+                    formatTimestamp(r.timestamp),
+                    r.userName || "",
+                    r.userEmpId || "",
+                    r.userDept || "",
+                    nameParts[0].trim(),
+                    sessionDateStr
+                ];
+            });
 
             const escapeCsvValue = (val) => {
                 const str = String(val).replace(/"/g, '""');
